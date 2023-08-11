@@ -6,6 +6,13 @@ using UnityEngine.InputSystem.XR;
 public class Humanoid : MonoBehaviour
 {
 
+    /// <summary>
+    /// ƒLƒƒƒ‰‚ÌIDB
+    /// </summary>
+    [SerializeField]  
+    protected int _Id;
+    public int Id => _Id;
+
     protected Animator _animator;
 
     // animation IDs
