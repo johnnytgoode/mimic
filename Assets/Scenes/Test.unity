@@ -3438,6 +3438,13 @@ MonoBehaviour:
   - {fileID: 7196692117285062041, guid: 916021c4b2985e4478877181d9f3c3b4, type: 3}
   target: {fileID: 1335156118}
   _LoopWaitTimerMax: 10
+  _CurrentLoopData:
+    _LoopStateId: 0
+    _LoopPartNumMax: 0
+    _LoopPartDataList:
+    - _LoopPartTime: 3
+      _IsLoopPartFinish: 0
+    _CurrentLoopNo: 0
 --- !u!4 &2139674179
 Transform:
   m_ObjectHideFlags: 0

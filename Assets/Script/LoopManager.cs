@@ -18,7 +18,7 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
 
     private float _LoopWaitTime = 0.0f;
 
-
+    public cLoopData _CurrentLoopData = new cLoopData();
 
     public class Entry
     {
@@ -56,6 +56,9 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
         Finish,
     }
 
+    /// <summary>
+    /// 状態
+    /// </summary>
     private State _State = State.Init;
 
     /// <summary>
@@ -159,21 +162,32 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
             case State.Wait:
                 {
                     _LoopWaitTime += Time.deltaTime;
-                    if(_LoopWaitTime >= _LoopWaitTimerMax)
+                    if(_LoopWaitTime >= _CurrentLoopData.getLoopPartTime())
                     {
-                        foreach(var witness in  _Witnesses)
+                        if(_CurrentLoopData.isLoopPartFinish() == false)
                         {
-                            if(witness.IsActionEnd == false)
-                            {
-                                // アクション完了してなかったらセットしなおし
-                                _LoopWaitTime = 0.0f;
+                            // アクション完了してなかったらセットしなおし
+                            _LoopWaitTime = 0.0f;
 
-                                _State = State.Init_Position;
-                                Debug.Log("アクションループ");
+                            _State = State.Init_Position;
+                            Debug.Log("アクションループ");
 
-                                return ;
-                            }
+                            return;
+
                         }
+                        //foreach (var witness in  _Witnesses)
+                        //{
+                        //    if(witness.IsActionEnd == false)
+                        //    {
+                        //        // アクション完了してなかったらセットしなおし
+                        //        _LoopWaitTime = 0.0f;
+
+                        //        _State = State.Init_Position;
+                        //        Debug.Log("アクションループ");
+
+                        //        return ;
+                        //    }
+                       // }
 
                         // アクション完了してなかったらセットしなおし
                         _State = State.Finish;
