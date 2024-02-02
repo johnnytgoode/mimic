@@ -26,9 +26,6 @@ public class NavMeshController : Witness
     public Transform target;
     private NavMeshAgent myAgent;
 
-
-    Queue<LoopManager.WitnessAction> _ActionQueue = new Queue<LoopManager.WitnessAction>();
-
     /// <summary>
     /// 登録されたアクションが終了したかどうか
     /// </summary>
@@ -114,50 +111,11 @@ public class NavMeshController : Witness
     }
 
     /// <summary>
-    /// アクションのリセット
-    /// </summary>
-    public void resetAction()
-    {
-        _ActionQueue.Clear();
-    }
-
-    /// <summary>
-    /// 行動のセット
-    /// </summary>
-    public void enqueueActionState(LoopManager.WitnessAction action)
-    {
-        _ActionQueue.Enqueue(action);
-        _CurrentActionState = ActionState.FinishCheck;
-
-    }
-
-    /// <summary>
     /// 次のアクションをセット
     /// </summary>
     public bool setNextAction()
     {
-        var action = _ActionQueue.Dequeue();
-        if(action == null)
-        {
-            return false;
-        }
 
-        switch (action.ActionType)
-        {
-            // ナビアクション登録
-            case LoopManager.WitnessAction.WitnessActionType.Navi:
-                {
-                    var naviAction = action as LoopManager.WitnessActionNavi;
-                    if (naviAction != null)
-                    {
-                        // targetに向かって移動します。
-                        myAgent.SetDestination(naviAction.TargetPosition);
-                        myAgent.isStopped = false ;
-                        _CurrentActionState = ActionState.Navi;
-                    }
-                    return true;
-                }
-        }
         return false;
     }
 

@@ -6,44 +6,17 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class LoopManager : SingletonMonoBehaviour<LoopManager>
 {
+    // パート上での経過時間
     [SerializeField]
-    private List<GameObject> WitnessPrefabList = new List<GameObject>();
-
-    GameObject _WitnessInstance = null;
-
-    public Transform target;
-
-    [SerializeField]
-    private float _LoopWaitTimerMax = 3.0f;
-
     private float _LoopWaitTime = 0.0f;
 
-    public cLoopData _CurrentLoopData = new cLoopData();
-
-    public class Entry
-    {
-        public Entry(int id)
-        {
-            _Id = id;
-        }
-        /// <summary>
-        /// エントリID
-        /// </summary>
-        private int _Id;
-        public int Id { get { return _Id; } set { _Id = value; } }
-
-        /// <summary>
-        /// そのセットを完了したか
-        /// </summary>
-        private bool _IsFinish;
-        public bool IsFinish { get { return _IsFinish; } set { _IsFinish = value; } }
-    }
-
     /// <summary>
-    /// 進行管理のリスト
+    /// 現在のパート
     /// </summary>
-    private List<Entry> Entries = new List<Entry>();
+    public int _CurrentPart = 0;
 
+    //TODO: ループデータは事前に作ったデータリストを引っ張ってくるように修正
+    public cLoopData _CurrentLoopData = new cLoopData();
 
     public enum State
     {
@@ -61,55 +34,14 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     /// </summary>
     private State _State = State.Init;
 
-    /// <summary>
-    /// 事件に関与してる参考人たち（犯人含む）
-    /// </summary>
-    private List<NavMeshController> _Witnesses = new List<NavMeshController>();
 
-    public class WitnessSetData
-    {
-        /// <summary>
-        /// そのセットの開始位置
-        /// </summary>
-        private Vector3 _StartPosition = new Vector3();
-        public Vector3 StartPosition => _StartPosition;
+    private Arbor.ParameterContainer _PT;
 
-        /// <summary>
-        /// 行動する本人自身のポインタ
-        /// </summary>
-        private Witness _Witness;
-
-        bool _IsFinish = false;
-
-    }
-
-    public class WitnessAction
-    {
-        public enum WitnessActionType
-        {
-            Navi,
-            Motion,
-        }
-
-        private WitnessActionType _ActionType;
-        public WitnessActionType ActionType => _ActionType;
-    }
-
-    public class WitnessActionNavi : WitnessAction
-    {
-        public WitnessActionNavi(Vector3 pos)
-        {
-            _TargetPosition = pos;
-        }
-
-        private Vector3 _TargetPosition;
-        public Vector3 TargetPosition => _TargetPosition;
-
-    }
 
     // Start is called before the first frame update
     void Start()
     {
+        _PT = GetComponent<Arbor.ParameterContainer>();
     }
 
     // Update is called once per frame
@@ -124,16 +56,16 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                 }
             case State.Instantiate:
                 {
-                    _WitnessInstance = Instantiate(WitnessPrefabList[0], Vector3.zero, Quaternion.identity);
+                    //_WitnessInstance = Instantiate(WitnessPrefabList[0], Vector3.zero, Quaternion.identity);
                     _State = State.Instantiate_Wait;
                     break;
                 }
             case State.Instantiate_Wait:
                 {
-                    if (_WitnessInstance.activeSelf)
+                    //if (_WitnessInstance.activeSelf)
                     {
-                        var comp = _WitnessInstance.GetComponent<NavMeshController>();
-                        _Witnesses.Add(comp);
+                        //var comp = _WitnessInstance.GetComponent<NavMeshController>();
+                        //_Witnesses.Add(comp);
 
                         _State = State.Init_Position;
                     }
@@ -141,20 +73,17 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                 }
             case State.Init_Position:
                 {
-                    foreach (var witness in _Witnesses)
-                    {
-                        Vector3 pos = new Vector3(2.86f, -0.04f, 10.04f);
-                        witness.setTransform(pos, Quaternion.identity);
-                    }
+                    var currentLoop = _PT.GetInt("CurrentLoop");
+                    WitnessManager.Instance.resetPartStartTransform(currentLoop);
                     _State = State.ActionStart;
                     break;
                 }
             case State.ActionStart:
                 {
-                    foreach (var witness in _Witnesses)
-                    {
-                        witness.enqueueActionState(new WitnessActionNavi(target.position));
-                    }
+                    //foreach (var witness in _Witnesses)
+                    //{
+                    //    witness.enqueueActionState(new WitnessActionNavi(target.position));
+                    //}
 
                     _State = State.Wait;
                     break;
@@ -164,33 +93,38 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     _LoopWaitTime += Time.deltaTime;
                     if(_LoopWaitTime >= _CurrentLoopData.getLoopPartTime())
                     {
-                        if(_CurrentLoopData.isLoopPartFinish() == false)
+                        bool success = WitnessManager.Instance.isAllWitnessPartActionSuccess();
+
+                        if(success)
+                        {
+                            var currentLoop = _PT.GetInt("CurrentLoop");
+                            currentLoop++;
+                            _LoopWaitTime = 0.0f;
+                            Debug.Log("アクション成功。次のパートに移行");
+
+                            _PT.SetInt("CurrentLoop", currentLoop);
+
+                            int partMax = 99;
+                            if(partMax < currentLoop)
+                            {
+                                _State = State.Finish;
+                                return;
+                            }
+
+                        }
+                        else
                         {
                             // アクション完了してなかったらセットしなおし
                             _LoopWaitTime = 0.0f;
 
                             _State = State.Init_Position;
-                            Debug.Log("アクションループ");
 
-                            return;
+                            Debug.Log("アクション失敗。アクションループします");
 
                         }
-                        //foreach (var witness in  _Witnesses)
-                        //{
-                        //    if(witness.IsActionEnd == false)
-                        //    {
-                        //        // アクション完了してなかったらセットしなおし
-                        //        _LoopWaitTime = 0.0f;
 
-                        //        _State = State.Init_Position;
-                        //        Debug.Log("アクションループ");
-
-                        //        return ;
-                        //    }
-                       // }
-
-                        // アクション完了してなかったらセットしなおし
-                        _State = State.Finish;
+                        // 再開させる
+                        WitnessManager.Instance.retartThinkFSM();
                     }
 
                     break;
@@ -200,49 +134,6 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     Debug.Log("アクション完了");
                     break;
                 }
-        }
-    }
-
-    /// <summary>
-    /// エントリの追加
-    /// </summary>
-    /// <param name="id"></param>
-    public void addEntry(int id)
-    {
-        if (Entries.Exists(x => x.Id == id))
-        {
-            print("");
-            return;
-        }
-
-        Entries.Add(new Entry(id));
-    }
-
-    /// <summary>
-    /// エントリ終了登録
-    /// </summary>
-    /// <param name="id"></param>
-    public void finishEntry(int id)
-    {
-        foreach(var entry in Entries)
-        {
-            if(entry.Id == id)
-            {
-                entry.IsFinish = true;
-                return;
-            }
-        }
-
-    }
-
-    /// <summary>
-    /// エントリのリフレッシュ（エントリの終了フラグをリセット
-    /// </summary>
-    public void refreshEntry()
-    {
-        foreach (var entry in Entries)
-        {
-            entry.IsFinish = false;
         }
     }
 }
