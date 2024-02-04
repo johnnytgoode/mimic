@@ -345,5 +345,23 @@ namespace StarterAssets
                 GroundedRadius);
         }
 
+        /// <summary>
+        /// 子リジョンに入った時の処理
+        /// </summary>
+        /// <param name="collision"></param>
+
+        public override void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Gimmick"))
+            {
+                // TODO:GimmickIDも作成
+                if (_input.use)
+                {
+
+                    Debug.Log("PLがコリジョン進行フラグON");
+                    LoopManager.Instance.setActionFlag(true);
+                }
+            }
+        }
     }
 }

@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Use",
+                    "type": "Button",
+                    "id": "86f8c4c9-bd8d-4552-ae6f-79e2c5a2f980",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -216,6 +225,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad4495c3-af7d-49e4-bc61-07f5358f81f0",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Use",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

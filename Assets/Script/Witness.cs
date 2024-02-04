@@ -12,11 +12,6 @@ public class Witness : Humanoid
     private ParameterContainer _PC;
 
     /// <summary>
-    /// ループリセット時の戻り先（rotが必要になったら作る）
-    /// </summary>
-    private Vector3 _PartStartPos = new Vector3();
-
-    /// <summary>
     /// 思考FSM
     /// </summary>
     public Arbor.ArborFSM _ThinkFSM = null;

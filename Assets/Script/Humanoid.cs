@@ -26,6 +26,11 @@ public class Humanoid : MonoBehaviour
 
     protected CharacterController _controller;
 
+    /// <summary>
+    /// ループリセット時の戻り先（rotが必要になったら作る）
+    /// </summary>
+    protected Vector3 _PartStartPos = new Vector3();
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -34,6 +39,8 @@ public class Humanoid : MonoBehaviour
         AssignAnimationIDs();
 
         _controller = GetComponent<CharacterController>();
+
+        _PartStartPos = transform.localPosition;
 
     }
 
@@ -75,5 +82,33 @@ public class Humanoid : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
         }
+    }
+
+
+    /// <summary>
+    /// 座標セット
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="quat"></param>
+    public virtual void setTransform(Vector3 pos, Quaternion quat)
+    {
+        transform.localPosition = pos;
+        transform.localRotation = quat;
+    }
+
+    /// <summary>
+    /// パート開始位置に移動
+    /// </summary>
+    public virtual void resetPartTransform()
+    {
+        Debug.Log("PLの位置をリセット");
+        transform.localPosition = _PartStartPos;
+    }
+
+
+    public virtual void OnTriggerStay(Collider other)
+    {
+        Debug.Log("子リジョンヒット");
+
     }
 }

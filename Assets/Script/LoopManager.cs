@@ -75,6 +75,10 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                 {
                     var currentLoop = _PT.GetInt("CurrentLoop");
                     WitnessManager.Instance.resetPartStartTransform(currentLoop);
+
+                    // PLの座標もリセット
+                    PlayerManager.Instance.resetPlayerPosition();
+
                     _State = State.ActionStart;
                     break;
                 }
@@ -135,5 +139,15 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     break;
                 }
         }
+    }
+
+    /// <summary>
+    /// 指定したフラグを立てる
+    /// </summary>
+    /// <param name="flag"></param>
+    public void setActionFlag(bool flag)
+    {
+        // TODO:フラグIDを指定できるようにする
+        _PT.SetBool("NextFlag", flag);
     }
 }

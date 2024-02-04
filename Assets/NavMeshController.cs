@@ -94,20 +94,20 @@ public class NavMeshController : Witness
         }
 
     }
-
+    
     /// <summary>
     /// 座標セット
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="quat"></param>
-    public void setTransform(Vector3 pos,  Quaternion quat)
+    public override void setTransform(Vector3 pos,  Quaternion quat)
     {
         myAgent.ResetPath();
 
-        myAgent.isStopped = true; 
+        myAgent.isStopped = true;
 
-        transform.localPosition = pos;
-        transform.localRotation = quat;
+        base.setTransform(pos, quat);
+
     }
 
     /// <summary>
