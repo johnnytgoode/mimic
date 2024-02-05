@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 {
     [SerializeField] private GameObject _Player = null;
-    [SerializeField]private Humanoid _PLCtrl = null;
+    private Humanoid _PLCtrl = null;
 
     // Start is called before the first frame update
     void Start()

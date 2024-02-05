@@ -34,8 +34,11 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     /// </summary>
     private State _State = State.Init;
 
-
+    /// <summary>
+    /// パラメータコンテナ
+    /// </summary>
     private Arbor.ParameterContainer _PT;
+
 
 
     // Start is called before the first frame update
@@ -149,5 +152,18 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     {
         // TODO:フラグIDを指定できるようにする
         _PT.SetBool("NextFlag", flag);
+    }
+
+    public void setActionFlag(int flag)
+    {
+        var actFlag = _PT.GetInt("ActionFlag");
+        actFlag |= (1 << flag);
+        _PT.SetInt("ActionFlag", actFlag);
+    }
+
+    public bool isOnActionFlag(int flag)
+    {
+        var actFlag = _PT.GetInt("ActionFlag");
+        return (actFlag &= (1 << flag)) != 0 ;
     }
 }
