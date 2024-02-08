@@ -27,9 +27,6 @@ public class Witness : Humanoid
 
         // 証人リストに自分を追加
         WitnessManager.Instance.addWitness(this);
-
-        var trans = GetComponent<Transform>();
-        _PartStartPos = trans.position;
     }
 
     // Update is called once per frame
@@ -54,6 +51,21 @@ public class Witness : Humanoid
     }
 
     /// <summary>
+    /// パート完了フラグのセット
+    /// </summary>
+    /// <param name="success"></param>
+    public void setPartActionSuccess(bool success)
+    {
+        if (_PC == null)
+        {
+            Debug.Log("パラメータコンテナがnull");
+        }
+
+        _PC.SetBool("IsPartActionSuccess",success);
+
+    }
+
+    /// <summary>
     /// 思考FSMの再開（ループリセット、次パートへの遷移用）
     /// </summary>
     public void restartThinkFSM()
@@ -69,11 +81,11 @@ public class Witness : Humanoid
     /// パートごとの開始位置に戻す（ループリセット用）
     /// </summary>
     /// <param name="part"></param>
-    public void resetPartTransform(int part)
+    public override void resetPartTransform(int part)
     {
         // とりあえず開始時の座標を入れる
         // TODO各パート開始位置を保存しておいて指定する？
-        transform.SetPositionAndRotation(_PartStartPos, transform.rotation);
+        transform.SetPositionAndRotation(_PartStartPosList[part], transform.rotation);
 
     }
 

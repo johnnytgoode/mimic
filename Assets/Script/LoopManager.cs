@@ -9,11 +9,33 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     // パート上での経過時間
     [SerializeField]
     private float _LoopWaitTime = 0.0f;
+    public float LoopWaitTime
+    {
+        get { return _LoopWaitTime; }
+    }
+
+    /// <summary>
+    /// ループ終了残り時間計算用
+    /// </summary>
+    private float _LoopPartRestTime = 0.0f;
+
+    public float LoopPartRestTime
+    {
+        get{return _LoopPartRestTime;}
+    }
+
 
     /// <summary>
     /// 現在のパート
     /// </summary>
     public int _CurrentPart = 0;
+
+    /// <summary>
+    /// 現在のパート番号制御
+    /// </summary>
+    [SerializeField] GameObject[] PartNoGUIObj = new GameObject[2];
+
+    private GUIPartNo[] _PartNoGUI = new GUIPartNo[2];
 
     //TODO: ループデータは事前に作ったデータリストを引っ張ってくるように修正
     public cLoopData _CurrentLoopData = new cLoopData();
@@ -39,12 +61,12 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     /// </summary>
     private Arbor.ParameterContainer _PT;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         _PT = GetComponent<Arbor.ParameterContainer>();
+        _PartNoGUI[0] = PartNoGUIObj[0].GetComponent<GUIPartNo>();
+        _PartNoGUI[1] = PartNoGUIObj[1].GetComponent<GUIPartNo>();
     }
 
     // Update is called once per frame
@@ -55,6 +77,10 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
             case State.Init:
                 {
                     _State = State.Instantiate;
+
+                    // 仮で最大値設定
+                    _PartNoGUI[0].setPartNo(5);
+
                     break;
                 }
             case State.Instantiate:
@@ -76,11 +102,17 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                 }
             case State.Init_Position:
                 {
+
                     var currentLoop = _PT.GetInt("CurrentLoop");
-                    WitnessManager.Instance.resetPartStartTransform(currentLoop);
+                    _PartNoGUI[1].setPartNo(currentLoop);
 
                     // PLの座標もリセット
-                    PlayerManager.Instance.resetPlayerPosition();
+                    PlayerManager.Instance.resetPlayerPosition(currentLoop);
+                    WitnessManager.Instance.resetPartStartTransform(currentLoop);
+
+                    // 再開させる
+                    WitnessManager.Instance.retartThinkFSM();
+
 
                     _State = State.ActionStart;
                     break;
@@ -91,14 +123,16 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     //{
                     //    witness.enqueueActionState(new WitnessActionNavi(target.position));
                     //}
-
+                    _LoopPartRestTime = _CurrentLoopData.getLoopPartTime();
                     _State = State.Wait;
                     break;
                 }
             case State.Wait:
                 {
                     _LoopWaitTime += Time.deltaTime;
-                    if(_LoopWaitTime >= _CurrentLoopData.getLoopPartTime())
+                    float loopPartTime = _CurrentLoopData.getLoopPartTime();
+                    _LoopPartRestTime = loopPartTime - _LoopWaitTime;
+                    if (_LoopPartRestTime <= 0.0f)
                     {
                         bool success = WitnessManager.Instance.isAllWitnessPartActionSuccess();
 
@@ -110,6 +144,11 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                             Debug.Log("アクション成功。次のパートに移行");
 
                             _PT.SetInt("CurrentLoop", currentLoop);
+
+                            // ループ開始位置の更新
+                            PlayerManager.Instance.setPlayerPartResetPos(currentLoop);
+                            WitnessManager.Instance.setPartResetPos(currentLoop);
+
 
                             int partMax = 99;
                             if(partMax < currentLoop)
@@ -124,14 +163,12 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                             // アクション完了してなかったらセットしなおし
                             _LoopWaitTime = 0.0f;
 
-                            _State = State.Init_Position;
-
                             Debug.Log("アクション失敗。アクションループします");
 
                         }
 
-                        // 再開させる
-                        WitnessManager.Instance.retartThinkFSM();
+                        _State = State.Init_Position;
+
                     }
 
                     break;

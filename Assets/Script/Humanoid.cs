@@ -29,7 +29,7 @@ public class Humanoid : MonoBehaviour
     /// <summary>
     /// ループリセット時の戻り先（rotが必要になったら作る）
     /// </summary>
-    protected Vector3 _PartStartPos = new Vector3();
+    protected Vector3[] _PartStartPosList;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -40,7 +40,9 @@ public class Humanoid : MonoBehaviour
 
         _controller = GetComponent<CharacterController>();
 
-        _PartStartPos = transform.localPosition;
+        _PartStartPosList = new Vector3[5];
+
+        _PartStartPosList[0] = transform.localPosition;
 
     }
 
@@ -99,10 +101,20 @@ public class Humanoid : MonoBehaviour
     /// <summary>
     /// パート開始位置に移動
     /// </summary>
-    public virtual void resetPartTransform()
+    public virtual void resetPartTransform(int partNo)
     {
         Debug.Log("PLの位置をリセット");
-        transform.localPosition = _PartStartPos;
+        transform.localPosition = _PartStartPosList[partNo];
+    }
+
+    /// <summary>
+    /// パート開始位置設定
+    /// </summary>
+    /// <param name="partNo"></param>
+    /// <param name="pos"></param>
+    public virtual void setPartStartPos(int partNo)
+    {
+        _PartStartPosList[partNo] = transform.localPosition;
     }
 
 

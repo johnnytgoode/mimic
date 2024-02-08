@@ -363,6 +363,15 @@ namespace StarterAssets
                     EvidenceManager.Instance.useEvidence(EvidenceManager.EvidenceId.RoomNo);
                 }
             }
+            else if(other.CompareTag("Item"))
+            {
+                if (_input.use) 
+                {
+                    var item = other.GetComponent<Item>();
+
+                    ItemManager.Instance.addItem(item.ItemId);
+                }
+            }
         }
     }
 }

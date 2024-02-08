@@ -26,11 +26,24 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     /// <summary>
     /// パート開始位置にリセット
     /// </summary>
-    public void resetPlayerPosition()
+    public void resetPlayerPosition(int partNo)
     {
         if( _Player != null ) 
         {
-            _PLCtrl.resetPartTransform();        
+            _PLCtrl.resetPartTransform(partNo);        
+        }
+    }
+
+    /// <summary>
+    /// 指定のパートの開始位置を設定
+    /// </summary>
+    /// <param name="partNo"></param>
+    /// <param name="pos"></param>
+    public void setPlayerPartResetPos(int partNo)
+    {
+        if (_Player != null)
+        {
+            _PLCtrl.setPartStartPos(partNo);
         }
     }
 }

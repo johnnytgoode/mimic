@@ -73,6 +73,16 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
         foreach (var witness in _WitnessList)
         {
             witness.resetPartTransform(part);
+            witness.setPartActionSuccess(false);
         }
+    }
+
+    public void setPartResetPos(int part)
+    {
+        foreach (var witness in _WitnessList)
+        {
+            witness.setPartStartPos(part);
+        }
+
     }
 }
