@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Witness : Humanoid
 {
@@ -85,8 +86,10 @@ public class Witness : Humanoid
     {
         // とりあえず開始時の座標を入れる
         // TODO各パート開始位置を保存しておいて指定する？
-        transform.SetPositionAndRotation(_PartStartPosList[part], transform.rotation);
-
+        var agent = GetComponent<NavMeshAgent>(); // ナビ用エージェントがついてると座標指定移動ができないことがあるので切って設定
+        agent.enabled = false;
+        transform.SetLocalPositionAndRotation(_PartStartPosList[part], transform.rotation);
+        agent.enabled = true;
     }
 
 }

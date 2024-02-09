@@ -357,7 +357,9 @@ namespace StarterAssets
                 // TODO:GimmickIDも作成
                 if (_input.use)
                 {
-
+                    var gimmick = other.GetComponent<Gimmick>();
+                    gimmick.activateGimmick();
+                 
                     Debug.Log("PLがコリジョン進行フラグON");
                     //LoopManager.Instance.setActionFlag(true);
                     EvidenceManager.Instance.useEvidence(EvidenceManager.EvidenceId.RoomNo);

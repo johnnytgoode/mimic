@@ -7,7 +7,10 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
     public enum ItemId
     {
+        None,
+
         Key,        // 鍵
+        Knife,      // ナイフ
 
         Max,
 
@@ -36,6 +39,27 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     /// <param name="id"></param>
     public void addItem(ItemId id)
     {
+        Debug.Log("add item" + id.ToString());
+
         _Items.Add(id);
+    }
+
+    /// <summary>
+    /// アイテムの除外
+    /// </summary>
+    /// <param name="id"></param>
+    public  void removeItem(ItemId id) 
+    {
+        _Items.Remove(id);
+    }
+
+    /// <summary>
+    /// アイテムを持ってるか
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public bool hasItem(ItemId id)
+    {
+        return _Items.Contains(id);
     }
 }
