@@ -61,6 +61,15 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     /// </summary>
     private Arbor.ParameterContainer _PT;
 
+
+    public enum ActionFlag
+    {
+        C_Sabori,
+        A_Kill,
+        D_RoomChange,
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,14 +132,16 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     //{
                     //    witness.enqueueActionState(new WitnessActionNavi(target.position));
                     //}
-                    _LoopPartRestTime = _CurrentLoopData.getLoopPartTime();
+                    var currentLoop = _PT.GetInt("CurrentLoop");
+                    _LoopPartRestTime = _CurrentLoopData.getLoopPartTime(currentLoop);
                     _State = State.Wait;
                     break;
                 }
             case State.Wait:
                 {
                     _LoopWaitTime += Time.deltaTime;
-                    float loopPartTime = _CurrentLoopData.getLoopPartTime();
+                    var currentLoop = _PT.GetInt("CurrentLoop");
+                    float loopPartTime = _CurrentLoopData.getLoopPartTime(currentLoop);
                     _LoopPartRestTime = loopPartTime - _LoopWaitTime;
                     if (_LoopPartRestTime <= 0.0f)
                     {
@@ -138,7 +149,6 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
 
                         if(success)
                         {
-                            var currentLoop = _PT.GetInt("CurrentLoop");
                             currentLoop++;
                             _LoopWaitTime = 0.0f;
                             Debug.Log("アクション成功。次のパートに移行");

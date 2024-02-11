@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using static cLoopData;
 
 [System.Serializable]
 public class cLoopData
@@ -20,24 +23,12 @@ public class cLoopData
 
     public int _CurrentLoopNo = 0;
 
-    /// <summary>
-    /// ƒ‹[ƒv‚ªI—¹‚µ‚½‚©
-    /// </summary>
-    public bool isLoopPartFinish()
-    {
-        if(_LoopPartDataList.Count > 0 && _CurrentLoopNo < _LoopPartDataList.Count)
-        {
-           return _LoopPartDataList[_CurrentLoopNo]._IsLoopPartFinish;
-        }
 
-        return false;
-    }
-
-    public float getLoopPartTime()
+    public float getLoopPartTime(int partNo)
     {
         if (_LoopPartDataList.Count > 0 && _CurrentLoopNo < _LoopPartDataList.Count)
         {
-            return _LoopPartDataList[_CurrentLoopNo]._LoopPartTime;
+            return _LoopPartDataList[partNo]._LoopPartTime;
         }
 
         return 0.0f;
@@ -51,6 +42,8 @@ public class cLoopData
     {
         public float _LoopPartTime = 0.0f;
 
-        public bool _IsLoopPartFinish = false;
+        public string Description;
+
     }
 }
+

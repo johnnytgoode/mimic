@@ -7,7 +7,7 @@ using Arbor.BehaviourTree;
 [AddComponentMenu("")]
 public class FlagCheck : Decorator {
 
-	[SerializeField] EvidenceManager.EvidenceId _EvidenceId;
+	[SerializeField]LoopManager.ActionFlag _ActionFlag;
 
 	protected override void OnAwake() {
 	}
@@ -16,7 +16,7 @@ public class FlagCheck : Decorator {
 	}
 
 	protected override bool OnConditionCheck() {		
-		return LoopManager.Instance.isOnActionFlag(((int)_EvidenceId));
+		return LoopManager.Instance.isOnActionFlag(((int)_ActionFlag));
 	}
 
 	protected override void OnEnd() {

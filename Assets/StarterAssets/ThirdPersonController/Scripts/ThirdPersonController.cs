@@ -361,8 +361,6 @@ namespace StarterAssets
                     gimmick.activateGimmick();
                  
                     Debug.Log("PLがコリジョン進行フラグON");
-                    //LoopManager.Instance.setActionFlag(true);
-                    EvidenceManager.Instance.useEvidence(EvidenceManager.EvidenceId.RoomNo);
                 }
             }
             else if(other.CompareTag("Item"))

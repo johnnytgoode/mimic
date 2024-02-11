@@ -46,6 +46,7 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
         {
             if(witness.isPartActionSuccess() ==false)
             {
+                Debug.Log(witness.gameObject.name + "is not actionSuccess");
                 return false;
             }
         }

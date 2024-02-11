@@ -38,8 +38,17 @@ public class Gimmick : MonoBehaviour
         {
             Debug.Log("activate Gimmick" + GimmickId.ToString());
 
-            // 仮でドアの当たり自体そのものをなくす
-            gameObject.SetActive(false);
+            if(GimmickId == GimmickManager.GimmickId.LockedDoor) 
+            {
+                // 仮でドアの当たり自体そのものをなくす
+                gameObject.SetActive(false);
+            }
+            else if(GimmickId == GimmickManager.GimmickId.Kill)
+            {
+                // 進行フラグを立てる
+                LoopManager.Instance.setActionFlag(((int)LoopManager.ActionFlag.A_Kill));
+            }
+
         }
 
     }

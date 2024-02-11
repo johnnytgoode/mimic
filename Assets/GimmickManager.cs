@@ -7,7 +7,8 @@ public class GimmickManager : SingletonMonoBehaviour<GimmickManager>
 
     public enum GimmickId
     {
-        LockedDoor
+        LockedDoor,
+        Kill,
     }
 
     // Start is called before the first frame update

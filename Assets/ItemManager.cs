@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EvidenceManager;
 
 public class ItemManager : SingletonMonoBehaviour<ItemManager>
 {
@@ -15,6 +17,15 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         Max,
 
     }
+
+    [Serializable]
+    public class ItemToFlag
+    {
+        public ItemId Id;
+        public LoopManager.ActionFlag ActionFlag;
+    }
+
+    [SerializeField] public List<ItemToFlag> _ItemToFlags = new List<ItemToFlag>();
 
     /// <summary>
     /// 取得アイテムリスト
@@ -61,5 +72,28 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     public bool hasItem(ItemId id)
     {
         return _Items.Contains(id);
+    }
+
+    /// <summary>
+    /// 証拠品を使う
+    /// </summary>
+    /// <param name="id"></param>
+    public void useItem(ItemId id)
+    {
+        var flag = ItemToActionFlag(id);
+        LoopManager.Instance.setActionFlag(((int)flag));
+    }
+
+    public LoopManager.ActionFlag ItemToActionFlag(ItemId id)
+    {
+        foreach (var item in _ItemToFlags)
+        {
+            if (item.Id == id)
+            {
+                return item.ActionFlag;
+            }
+        }
+        return LoopManager.ActionFlag.C_Sabori;
+
     }
 }
