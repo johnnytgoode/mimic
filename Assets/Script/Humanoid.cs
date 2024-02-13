@@ -40,7 +40,7 @@ public class Humanoid : MonoBehaviour
 
         _controller = GetComponent<CharacterController>();
 
-        _PartStartPosList = new Vector3[5];
+        _PartStartPosList = new Vector3[6];
 
         _PartStartPosList[0] = transform.localPosition;
 

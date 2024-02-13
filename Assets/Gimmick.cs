@@ -48,6 +48,10 @@ public class Gimmick : MonoBehaviour
                 // 進行フラグを立てる
                 LoopManager.Instance.setActionFlag(((int)LoopManager.ActionFlag.A_Kill));
             }
+            else if (GimmickId == GimmickManager.GimmickId.RoomChange)
+            {
+                LoopManager.Instance.setActionFlag(((int)LoopManager.ActionFlag.D_RoomChange));
+            }
 
         }
 

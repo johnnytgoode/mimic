@@ -13,6 +13,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
         Key,        // 鍵
         Knife,      // ナイフ
+        DoorRose,    // ルームマーク
 
         Max,
 

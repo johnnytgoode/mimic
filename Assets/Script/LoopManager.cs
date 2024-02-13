@@ -150,6 +150,13 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                         if(success)
                         {
                             currentLoop++;
+                            int partMax = 5;
+                            if (partMax < currentLoop)
+                            {
+                                _State = State.Finish;
+                                return;
+                            }
+
                             _LoopWaitTime = 0.0f;
                             Debug.Log("アクション成功。次のパートに移行");
 
@@ -160,12 +167,6 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                             WitnessManager.Instance.setPartResetPos(currentLoop);
 
 
-                            int partMax = 99;
-                            if(partMax < currentLoop)
-                            {
-                                _State = State.Finish;
-                                return;
-                            }
 
                         }
                         else

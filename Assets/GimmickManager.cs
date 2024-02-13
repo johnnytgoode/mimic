@@ -9,6 +9,7 @@ public class GimmickManager : SingletonMonoBehaviour<GimmickManager>
     {
         LockedDoor,
         Kill,
+        RoomChange
     }
 
     // Start is called before the first frame update

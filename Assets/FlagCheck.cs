@@ -9,6 +9,8 @@ public class FlagCheck : Decorator {
 
 	[SerializeField]LoopManager.ActionFlag _ActionFlag;
 
+	[SerializeField]FlexibleBool NotEqualFlag;
+
 	protected override void OnAwake() {
 	}
 
@@ -16,7 +18,13 @@ public class FlagCheck : Decorator {
 	}
 
 	protected override bool OnConditionCheck() {		
-		return LoopManager.Instance.isOnActionFlag(((int)_ActionFlag));
+		
+		if(NotEqualFlag.value == true)
+		{
+            return !LoopManager.Instance.isOnActionFlag(((int)_ActionFlag));
+
+        }
+        return LoopManager.Instance.isOnActionFlag(((int)_ActionFlag));
 	}
 
 	protected override void OnEnd() {
