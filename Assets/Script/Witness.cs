@@ -1,6 +1,7 @@
 using Arbor;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +12,16 @@ public class Witness : Humanoid
     /// BT制御用のパラメータコンテナ
     /// </summary>
     private ParameterContainer _PC;
+
+    /// <summary>
+    /// 吹き出しのテキスト
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI _BaroonText;
+
+    /// <summary>
+    /// 各パートでの行動テキスト
+    /// </summary>
+    [SerializeField] private List<string> _BaroonTextList = new List<string>();
 
     /// <summary>
     /// 思考FSM
@@ -28,6 +39,9 @@ public class Witness : Humanoid
 
         // 証人リストに自分を追加
         WitnessManager.Instance.addWitness(this);
+
+        // 吹き出しテキスト
+        _BaroonText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -90,6 +104,25 @@ public class Witness : Humanoid
         agent.enabled = false;
         transform.SetLocalPositionAndRotation(_PartStartPosList[part], transform.rotation);
         agent.enabled = true;
+    }
+
+    /// <summary>
+    /// パートを指定して吹き出しテキストセット
+    /// </summary>
+    /// <param name="partNo"></param>
+    public void setPartBaroonText(int partNo)
+    {
+        setBaroonText(_BaroonTextList[partNo]);
+    }
+
+
+    /// <summary>
+    /// 吹き出しの文章セット
+    /// </summary>
+    /// <param name="text"></param>
+    private void setBaroonText(string text)
+    {
+        _BaroonText.text = text;
     }
 
 }

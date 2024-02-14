@@ -46,4 +46,5 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
             _PLCtrl.setPartStartPos(partNo);
         }
     }
+
 }

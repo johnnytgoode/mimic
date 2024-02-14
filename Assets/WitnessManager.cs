@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
@@ -86,4 +87,18 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
         }
 
     }
+
+    /// <summary>
+    /// 吹き出しのテキストセット
+    /// </summary>
+    /// <param name="partNo"></param>
+    public void setBaroonText(int partNo)
+    {
+        foreach (var witness in _WitnessList)
+        {
+            witness.setPartBaroonText(partNo);
+        }
+
+    }
+
 }

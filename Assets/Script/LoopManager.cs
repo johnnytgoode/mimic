@@ -119,6 +119,9 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     PlayerManager.Instance.resetPlayerPosition(currentLoop);
                     WitnessManager.Instance.resetPartStartTransform(currentLoop);
 
+                    // 吹き出しテキスト設定
+                    WitnessManager.Instance.setBaroonText(currentLoop);
+
                     // 再開させる
                     WitnessManager.Instance.retartThinkFSM();
 
