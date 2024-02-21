@@ -13,6 +13,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool use;
+		public bool pause;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -49,6 +50,13 @@ namespace StarterAssets
 		{
 			use = value.isPressed;
 		}
+
+		public void OnPause(InputValue value)
+		{
+			pause = value.isPressed;
+		}
+
+
 #endif
 
 
@@ -72,8 +80,14 @@ namespace StarterAssets
             use = newUseState;
 
         }
-		
-		public void SprintInput(bool newSprintState)
+        public void PauseInput(bool newPauseState)
+        {
+            use = newPauseState;
+
+        }
+
+
+        public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}

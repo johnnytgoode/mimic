@@ -143,6 +143,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Pause();
         }
 
         private void LateUpdate()
@@ -321,6 +322,15 @@ namespace StarterAssets
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
+        private void Pause()
+        {
+            if(_input.pause)
+            {
+                GameManager.Instance.IsPause = !GameManager.Instance.IsPause;
+                _input.pause = false;
             }
         }
 
