@@ -5,8 +5,29 @@ using UnityEngine;
 
 public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
 {
+    public enum WitnessId
+    {
+        None,
+        A,
+        B,
+        C,
+        D,
+        E,
+
+        Num,
+    }
+
     private List<Witness> _WitnessList = new List<Witness>();
 
+    /// <summary>
+    /// 証人プレハブリスト
+    /// </summary>
+    [SerializeField]private List<GameObject> _WitnessPrefabList = new List<GameObject>();
+
+    /// <summary>
+    /// 証言データリスト
+    /// </summary>
+    [SerializeField]private List<ScriptableObject> _TestimonyDataList = new List<ScriptableObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -100,5 +121,4 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
         }
 
     }
-
 }

@@ -22,6 +22,11 @@ public class EvidenceManager : SingletonMonoBehaviour<EvidenceManager>
 
     [SerializeField]public List<EvidenceToFlag> _EvidenceToFlags = new List<EvidenceToFlag>();
 
+    /// <summary>
+    /// 証拠のプレハブデータリスト
+    /// </summary>
+    [SerializeField]private List<GameObject> _EvidencePrefabList = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
