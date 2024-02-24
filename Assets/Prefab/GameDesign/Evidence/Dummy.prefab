@@ -49,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3030929368771260628, guid: 66cc525008d3443478f6a8ec68928a50, type: 3}
+      propertyPath: _Id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030929368771260628, guid: 66cc525008d3443478f6a8ec68928a50, type: 3}
       propertyPath: _Name
       value: "\u30C0\u30DF\u30FC"
       objectReference: {fileID: 0}

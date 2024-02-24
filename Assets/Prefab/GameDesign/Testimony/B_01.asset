@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f64fd5de9686ba4284ad2a172a9c0b6, type: 3}
   m_Name: B_01
   m_EditorClassIdentifier: 
-  WitnessId: 0
+  WitnessId: 2
   Stage: -1
   PartNo: -1
-  BaseTestimony: 
+  BaseTestimony: "\u4F55\u304B\u7269\u97F3\u3092\u805E\u3044\u3066\u69D8\u5B50\u3092\u898B\u306B\u884C\u304D\u307E\u3057\u305F\u3002"
   ActionFlag: 0
   UpdateTestimony: 

@@ -7,6 +7,7 @@ public class EvidenceManager : SingletonMonoBehaviour<EvidenceManager>
 {
     public enum EvidenceId
     {
+        None = 0,
         Trash,
         RoomNo,
 
@@ -60,5 +61,26 @@ public class EvidenceManager : SingletonMonoBehaviour<EvidenceManager>
         }
         return LoopManager.ActionFlag.C_Sabori;
         
+    }
+
+    /// <summary>
+    /// Ø‹’ƒf[ƒ^æ“¾
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Evidence getEvdenceData(EvidenceId id)
+    {
+        foreach(var evidence in _EvidencePrefabList)
+        {
+            var data = evidence.GetComponent<Evidence>();
+            if(data != null)
+            {
+                if(data.Id == id)
+                {
+                    return data;
+                }
+            }
+        }
+        return null;
     }
 }

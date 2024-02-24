@@ -8,6 +8,11 @@ using UnityEngine.AI;
 
 public class Witness : Humanoid
 {
+    [SerializeField] private WitnessManager.WitnessId _WitnessId;
+    public WitnessManager.WitnessId WitnessId
+    { get { return _WitnessId; } }
+
+
     /// <summary>
     /// BT制御用のパラメータコンテナ
     /// </summary>

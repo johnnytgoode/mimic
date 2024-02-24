@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+
 public class GUIThrustMenu : MonoBehaviour
 {
     private TextMeshProUGUI WitnessName;
@@ -23,6 +26,8 @@ public class GUIThrustMenu : MonoBehaviour
         Init,
         TestimonySelect,
         EvidenceSelect,
+        ThrustCheck,
+        Finish,
     }
 
     /// <summary>
@@ -59,33 +64,59 @@ public class GUIThrustMenu : MonoBehaviour
         Evidence02Tmb = GameObject.Find("Evidence02").GetComponent<Image>();
         Evidence03Tmb = GameObject.Find("Evidence03").GetComponent<Image>();
 
-        WitnessName.text = "変更成功";
-        Testimony.text = "変更成功";
-        EvidenceName.text = "変更成功";
-        EvidenceDescription.text = "変更成功";
-
-        // 選択可能なID初期化
-        _WitnessIds.Add(WitnessManager.WitnessId.A);
-        _WitnessIds.Add(WitnessManager.WitnessId.B);
-
-        _EvidenceIds.Add(EvidenceManager.EvidenceId.Trash);
-        _EvidenceIds.Add(EvidenceManager.EvidenceId.RoomNo);
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
         switch(_State)
         {
+            case State.Init:
+                {
+                    _CurrentSelectEvidence = 0;
+                    _CurrentSelectWitness = 0;
+
+                    setupWitnessIdList();
+                    setupEvidenceIdList();
+
+                    updateTestimonyDisp();
+                    updateEvidenceDisp();
+
+                    _State = State.TestimonySelect;
+
+                    break;
+                }
+
             case State.TestimonySelect:
                 {
                     testimonySelect();
                     break;
                 }
-                case State.EvidenceSelect:
+            case State.EvidenceSelect:
                 {
                     evidenceSelect();
+                    break;
+                }
+            case State.ThrustCheck:
+                {
+                    if(thrustCheck())
+                    {
+                        setThrustFlg();
+                        Debug.Log("突きつけ成功！");
+                        _State = State.Finish;
+                    }
+                    else
+                    {
+                        Debug.Log("突きつけ失敗…");
+                    }
+
+                    break;
+                }
+            case State.Finish:
+                {
+                    close();
+
                     break;
                 }
         }
@@ -93,17 +124,185 @@ public class GUIThrustMenu : MonoBehaviour
     }
 
     /// <summary>
+    /// 突きつけメニューのオープン
+    /// </summary>
+    public void open()
+    {
+        _State = State.Init;
+    }
+
+    /// <summary>
+    /// 突き詰めメニューのクローズ
+    /// </summary>
+    public void close()
+    {
+        // 仮
+        _State = State.Init;
+        GameManager.Instance.IsPause = false;
+    }
+
+    private void setupWitnessIdList()
+    {
+        var witnesses = WitnessManager.Instance.WitnessList;
+        foreach(var witness in witnesses)
+        {
+            _WitnessIds.Add(witness.WitnessId);
+        }
+
+        _WitnessIds.Sort();
+    }
+
+    /// <summary>
     /// 証言選択
     /// </summary>
     private void testimonySelect()
     {
+        if(Gamepad.current[GamepadButton.DpadRight].wasPressedThisFrame)
+        {
+            _CurrentSelectWitness++;
+            Debug.Log("CurrentSelectWitness:" + _CurrentSelectWitness);
+
+            if(_CurrentSelectWitness >= _WitnessIds.Count)
+            {
+                _CurrentSelectWitness = 0;
+            }
+            updateTestimonyDisp();
+        }
+        if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
+        {
+            _CurrentSelectWitness--;
+            Debug.Log("CurrentSelectWitness:" + _CurrentSelectWitness);
+
+            if (_CurrentSelectWitness < 0)
+            {
+                _CurrentSelectWitness = _WitnessIds.Count - 1;
+            }
+            updateTestimonyDisp();
+        }
+
+        // 証言確定
+        if (Gamepad.current[GamepadButton.A].wasPressedThisFrame)
+        {
+            _State = State.EvidenceSelect;
+            Debug.Log("State ->" + _State);
+        }
     }
+
+
+    private void setupEvidenceIdList()
+    {
+        // 選択可能なID初期化
+        _EvidenceIds.Add(EvidenceManager.EvidenceId.Trash);
+        _EvidenceIds.Add(EvidenceManager.EvidenceId.RoomNo);
+
+    }
+
+    /// <summary>
+    /// 証言データの表示更新
+    /// </summary>
+    private void updateTestimonyDisp()
+    {
+        int part = LoopManager.Instance._CurrentPart;
+
+        var witnessId = _WitnessIds[_CurrentSelectWitness];
+
+        var witnessData = WitnessManager.Instance.getWitnessData(witnessId);
+        string witnessNameText = witnessData.Name;
+        string testimonyText = WitnessManager.Instance.getTestimony(part, witnessId);
+
+        WitnessName.text = witnessNameText;
+        Testimony.text = testimonyText;
+
+        var witnessTmb = witnessData.Tmb;
+        Witness01Tmb.sprite = witnessTmb;
+    }
+
 
     /// <summary>
     /// 証拠選択
     /// </summary>
     private void evidenceSelect()
     {
+        if (Gamepad.current[GamepadButton.DpadRight].wasPressedThisFrame)
+        {
+            _CurrentSelectEvidence++;
+            Debug.Log("CurrentSelectEvidence:" + _CurrentSelectEvidence);
 
+            if (_CurrentSelectEvidence >= _EvidenceIds.Count)
+            {
+                _CurrentSelectEvidence = 0;
+            }
+            updateEvidenceDisp();
+        }
+        if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
+        {
+            _CurrentSelectEvidence--;
+            Debug.Log("CurrentSelectEvidence:" + _CurrentSelectEvidence);
+
+            if (_CurrentSelectEvidence < 0)
+            {
+                _CurrentSelectEvidence = _EvidenceIds.Count - 1;
+            }
+            updateEvidenceDisp();
+        }
+
+        // 証言確定
+        if (Gamepad.current[GamepadButton.A].wasPressedThisFrame)
+        {
+            _State = State.ThrustCheck;
+            Debug.Log("State ->" + _State);
+
+        }
+    }
+
+    /// <summary>
+    /// 証拠表示更新
+    /// </summary>
+    private void updateEvidenceDisp()
+    {
+        int part = LoopManager.Instance._CurrentPart;
+        var evidenceId = _EvidenceIds[_CurrentSelectEvidence];
+
+        var evidenceData = EvidenceManager.Instance.getEvdenceData(evidenceId);
+        if (evidenceData != null)
+        {
+            Evidence01Tmb.sprite = evidenceData.Tmb;
+
+            EvidenceName.text = evidenceData.Name;
+            EvidenceDescription.text = evidenceData.Description;
+        }
+    }
+
+    /// <summary>
+    /// 突きつけが成功？
+    /// </summary>
+    /// <returns></returns>
+    private bool thrustCheck()
+    {
+        int part = LoopManager.Instance._CurrentPart;
+
+        var witnessId = _WitnessIds[_CurrentSelectWitness];
+        var testimonyData = WitnessManager.Instance.getTestimonyData(part, witnessId);
+        if(testimonyData != null)
+        {
+            var evidenceId = _EvidenceIds[_CurrentSelectEvidence];
+            if(testimonyData.EvidenceId == evidenceId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 突きつけ成功した時の処理（フラグを立ててシナリオを呼び出す）
+    /// </summary>
+    private void setThrustFlg()
+    {
+        var evidenceId = _EvidenceIds[_CurrentSelectEvidence];
+        var actionFlg = EvidenceManager.Instance.evidenceIdToActionFlag(evidenceId);
+
+        LoopManager.Instance.setActionFlag(((int)actionFlg));
     }
 }

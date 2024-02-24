@@ -15,6 +15,13 @@ public class TestimonyData : ScriptableObject
     public int PartNo = -1;
 
     public string BaseTestimony;
-    public LoopManager.ActionFlag ActionFlag;
+    public EvidenceManager.EvidenceId EvidenceId;
     public string UpdateTestimony;
+
+    public string getTextimony()
+    {
+        // ğŒ’B¬‚µ‚Ä‚½‚çXVŒã‚ÌØŒ¾‚ğ•Ô‚·”»’è
+
+        return BaseTestimony;
+    }
 }
