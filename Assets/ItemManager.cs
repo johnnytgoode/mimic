@@ -14,6 +14,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         Key,        // 鍵
         Knife,      // ナイフ
         DoorRose,    // ルームマーク
+        Vase,       // 花瓶
 
         Max,
 
@@ -33,10 +34,18 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     /// </summary>
     private List<ItemId> _Items = new List<ItemId>();
 
+    [SerializeField] private GameObject ItemListGUIObj;
+    private GUIItemList _ItemListGUI;
+
+    /// <summary>
+    /// アイテムのプレビューオブジェ
+    /// </summary>
+    [SerializeField] private List<GameObject> _ItemPreviewObjList = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _ItemListGUI = ItemListGUIObj.GetComponent<GUIItemList>();       
     }
 
     // Update is called once per frame
@@ -54,6 +63,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         Debug.Log("add item" + id.ToString());
 
         _Items.Add(id);
+        _ItemListGUI.addInventory(id);
     }
 
     /// <summary>
@@ -63,6 +73,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     public  void removeItem(ItemId id) 
     {
         _Items.Remove(id);
+        _ItemListGUI.removeInventory(id);
     }
 
     /// <summary>
@@ -96,5 +107,23 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         }
         return LoopManager.ActionFlag.C_Sabori;
 
+    }
+
+    /// <summary>
+    /// アイテムプレビューデータ取得
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public ItemPreviewData getItemPreviewData(ItemManager.ItemId id)
+    {
+        foreach(var obj in _ItemPreviewObjList)
+        {
+            var itemPreviewData = obj.GetComponent<ItemPreviewData>();
+            if(itemPreviewData.ItemId == id)
+            {
+                return itemPreviewData;
+            }
+        }
+        return null;
     }
 }

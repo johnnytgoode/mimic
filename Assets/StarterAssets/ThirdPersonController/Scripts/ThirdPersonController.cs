@@ -378,8 +378,7 @@ namespace StarterAssets
                 if (_input.use) 
                 {
                     var item = other.GetComponent<Item>();
-
-                    ItemManager.Instance.addItem(item.ItemId);
+                    item.acquisition();                    
                 }
             }
         }

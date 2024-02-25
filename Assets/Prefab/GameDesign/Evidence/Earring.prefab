@@ -49,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3030929368771260628, guid: 66cc525008d3443478f6a8ec68928a50, type: 3}
+      propertyPath: _Id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030929368771260628, guid: 66cc525008d3443478f6a8ec68928a50, type: 3}
       propertyPath: _Name
       value: "\u7247\u8033\u30A4\u30A2\u30EA\u30F3\u30B0"
       objectReference: {fileID: 0}
@@ -58,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6001712364570525751, guid: 66cc525008d3443478f6a8ec68928a50, type: 3}
       propertyPath: m_Name
-      value: Vase
+      value: Earring
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
