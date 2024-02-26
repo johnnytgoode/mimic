@@ -369,9 +369,7 @@ namespace StarterAssets
                 {
                     var gimmick = other.GetComponent<Gimmick>();
                     gimmick.activateGimmick();
-                 
-                    Debug.Log("PLがコリジョン進行フラグON");
-                }
+                 }
             }
             else if(other.CompareTag("Item"))
             {

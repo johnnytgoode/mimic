@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gimmick : MonoBehaviour
+public class Gimmick : InteractObject
 {
     [SerializeField] GimmickManager.GimmickId _GimmickId;
     public GimmickManager.GimmickId GimmickId { get { return _GimmickId; } }
@@ -21,6 +21,10 @@ public class Gimmick : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// ギミックを実行することができるか
+    /// </summary>
+    /// <returns></returns>
     public bool canActivate()
     {
         // アイテム指定がない場合はtrue
@@ -32,6 +36,9 @@ public class Gimmick : MonoBehaviour
         return ItemManager.Instance.hasItem(_requestItemId);
     }
 
+    /// <summary>
+    /// ギミックを起動
+    /// </summary>
     public void activateGimmick()
     {
         if(canActivate())
@@ -53,7 +60,50 @@ public class Gimmick : MonoBehaviour
                 LoopManager.Instance.setActionFlag(((int)LoopManager.ActionFlag.D_RoomChange));
             }
 
+            _InteractGUI.SetActive(false);
+            _IsInteracted = true;
+
         }
 
+    }
+
+    /// <summary>
+    /// トリガコリジョンに入った時の処理
+    /// </summary>
+    /// <param name="collision"></param>
+
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        if (_IsInteracted)
+        {
+            return;
+        }
+
+        if(canActivate() == false)
+        {
+            return;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            _InteractGUI.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    ///トリガコリジョンから抜けたとき
+    /// </summary>
+    /// <param name="other"></param>
+    public virtual void OnTriggerExit(Collider other)
+    {
+        if (_IsInteracted)
+        {
+            return;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            _InteractGUI.SetActive(false);
+        }
     }
 }

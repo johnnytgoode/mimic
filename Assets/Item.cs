@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Windows;
 using static UnityEditor.Progress;
 
-public class Item : MonoBehaviour
+public class Item : InteractObject
 {
     /// <summary>
     /// アイテムId
@@ -14,16 +14,6 @@ public class Item : MonoBehaviour
     {
         get { return _ItemId; }
     }
-
-    /// <summary>
-    /// インタラクト用GUI
-    /// </summary>
-    [SerializeField] private GameObject _InteractGUI;
-
-    /// <summary>
-    /// 干渉済みかどうか
-    /// </summary>
-    private bool _IsInteracted = false;
 
     // Start is called before the first frame update
     void Start()

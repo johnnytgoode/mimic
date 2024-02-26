@@ -7,6 +7,7 @@ public class GimmickManager : SingletonMonoBehaviour<GimmickManager>
 
     public enum GimmickId
     {
+        None,
         LockedDoor,
         Kill,
         RoomChange
