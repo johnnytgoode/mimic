@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using static WitnessManager;
 
 public class GUIThrustMenu : MonoBehaviour
 {
@@ -143,11 +144,9 @@ public class GUIThrustMenu : MonoBehaviour
 
     private void setupWitnessIdList()
     {
-        var witnesses = WitnessManager.Instance.WitnessList;
-        foreach(var witness in witnesses)
-        {
-            _WitnessIds.Add(witness.WitnessId);
-        }
+        int part = LoopManager.Instance._CurrentPart;
+
+        _WitnessIds = WitnessManager.Instance.getPartActiveWitnessId(part);
 
         _WitnessIds.Sort();
     }
@@ -208,7 +207,12 @@ public class GUIThrustMenu : MonoBehaviour
 
         var witnessData = WitnessManager.Instance.getWitnessData(witnessId);
         string witnessNameText = witnessData.Name;
-        string testimonyText = WitnessManager.Instance.getTestimony(part, witnessId);
+        var testimonyData = WitnessManager.Instance.getTestimonyData(part, witnessId);
+        string testimonyText = "";
+        if(testimonyData != null)
+        {
+            testimonyText = testimonyData.getTextimony();
+        }
 
         WitnessName.text = witnessNameText;
         Testimony.text = testimonyText;

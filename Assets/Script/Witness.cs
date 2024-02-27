@@ -24,11 +24,6 @@ public class Witness : Humanoid
     [SerializeField] private TextMeshProUGUI _BaroonText;
 
     /// <summary>
-    /// 各パートでの行動テキスト
-    /// </summary>
-    [SerializeField] private List<string> _BaroonTextList = new List<string>();
-
-    /// <summary>
     /// 思考FSM
     /// </summary>
     public Arbor.ArborFSM _ThinkFSM = null;
@@ -117,7 +112,13 @@ public class Witness : Humanoid
     /// <param name="partNo"></param>
     public void setPartBaroonText(int partNo)
     {
-        setBaroonText(_BaroonTextList[partNo]);
+        var testimonyData = WitnessManager.Instance.getTestimonyData(partNo, WitnessId);
+        var text = "";
+        if (testimonyData != null)
+        {
+            text = testimonyData.getTextimony();
+        }
+        setBaroonText(text);
     }
 
 

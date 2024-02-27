@@ -33,9 +33,9 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
     [SerializeField]private List<GameObject> _WitnessPrefabList = new List<GameObject>();
 
     /// <summary>
-    /// 証言データリスト
+    /// パートデータリスト
     /// </summary>
-    [SerializeField]private List<TestimonyData> _TestimonyDataList = new List<TestimonyData>();
+    [SerializeField]private List<GameObject> _WitnessActionDataObj = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -161,18 +161,22 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
     /// <returns></returns>
     public TestimonyData getTestimonyData(int partNo, WitnessManager.WitnessId id)
     {
-        foreach (var testimony in _TestimonyDataList)
+        foreach (var actionObj in _WitnessActionDataObj)
         {
-            if (testimony.WitnessId != id)
+            var action = actionObj.GetComponent<WitnessPartActionData>();
+            if (action.WitnessId != id)
             {
                 continue;
             }
-            if (testimony.PartNo == partNo)
+            foreach (var actionData in action.WitnessActionList)
             {
-                continue;
+                if (actionData.Part != partNo)
+                {
+                    continue;
+                }
+                var testimony = actionData.Testimony;
+                return testimony;
             }
-
-            return testimony;
         }
 
         return null;
@@ -187,20 +191,53 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
     /// <returns></returns>
     public string getTestimony(int partNo,WitnessManager.WitnessId id)
     {
-        foreach(var testimony in _TestimonyDataList)
+        foreach(var actionObj in _WitnessActionDataObj)
         {
-            if(testimony.WitnessId != id)
+            var action = actionObj.GetComponent<WitnessPartActionData>();
+            if(action.WitnessId != id)
             {
                 continue;
             }
-            if(testimony.PartNo == partNo)
+            foreach (var actionData in action.WitnessActionList)
             {
-                continue;
+                if(actionData.Part !=  partNo)
+                {
+                    continue;
+                }
+                var testimony = actionData.Testimony;
+                if(testimony == null)
+                {
+                    return "";
+                }
+                return testimony.getTextimony();
             }
-
-            return testimony.getTextimony();
         }
 
         return "";
+    }
+
+    /// <summary>
+    /// そのパートで動く証人を取得
+    /// </summary>
+    /// <param name="partNo"></param>
+    /// <returns></returns>
+    public List<WitnessManager.WitnessId> getPartActiveWitnessId(int partNo)
+    {
+        var idList = new List<WitnessManager.WitnessId>();
+        foreach (var actionObj in _WitnessActionDataObj)
+        {
+            var action = actionObj.GetComponent<WitnessPartActionData>();
+            foreach (var actionData in action.WitnessActionList)
+            {
+                // そのパートの挙動データがあったらリストに追加
+                if (actionData.Part == partNo)
+                {
+                    idList.Add(action.WitnessId);
+                    break;
+                }
+            }
+        }
+
+        return idList;
     }
 }
