@@ -59,7 +59,7 @@ public class EvidenceManager : SingletonMonoBehaviour<EvidenceManager>
                 return evidence.ActionFlag;
             }
         }
-        return LoopManager.ActionFlag.C_Sabori;
+        return LoopManager.ActionFlag.C_SoundCheck;
         
     }
 

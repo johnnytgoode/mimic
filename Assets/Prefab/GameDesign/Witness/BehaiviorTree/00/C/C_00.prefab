@@ -123,8 +123,8 @@ MonoBehaviour:
       _NodeID: 1211126341
       position:
         serializedVersion: 2
-        x: -12
-        y: -204
+        x: 144
+        y: -252
         width: 300
         height: 0
       showComment: 0
@@ -154,8 +154,8 @@ MonoBehaviour:
       _NodeID: 2128155929
       position:
         serializedVersion: 2
-        x: 24
-        y: -48
+        x: -36
+        y: -72
         width: 300
         height: 0
       showComment: 0

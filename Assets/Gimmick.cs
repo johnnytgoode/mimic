@@ -60,7 +60,10 @@ public class Gimmick : InteractObject
                 LoopManager.Instance.setActionFlag(((int)LoopManager.ActionFlag.D_RoomChange));
             }
 
-            _InteractGUI.SetActive(false);
+            if (_InteractGUI != null)
+            {
+                _InteractGUI.SetActive(false);
+            }
             _IsInteracted = true;
 
         }
@@ -86,7 +89,10 @@ public class Gimmick : InteractObject
 
         if (other.CompareTag("Player"))
         {
-            _InteractGUI.SetActive(true);
+            if(_InteractGUI != null)
+            {
+                _InteractGUI.SetActive(true);
+            }
         }
     }
 
@@ -103,7 +109,10 @@ public class Gimmick : InteractObject
 
         if (other.CompareTag("Player"))
         {
-            _InteractGUI.SetActive(false);
+            if (_InteractGUI != null)
+            {
+                _InteractGUI.SetActive(false);
+            }
         }
     }
 }

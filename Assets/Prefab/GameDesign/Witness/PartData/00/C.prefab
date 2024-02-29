@@ -58,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
       propertyPath: _WitnessActionList.Array.data[0]._Part
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
       propertyPath: _WitnessActionList.Array.data[1]._Part
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
       propertyPath: _WitnessActionList.Array.data[2]._Part
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
       propertyPath: _WitnessActionList.Array.data[3]._Part
@@ -76,6 +76,18 @@ PrefabInstance:
       propertyPath: _WitnessActionList.Array.data[4]._Part
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
+      propertyPath: _WitnessActionList.Array.data[0]._Testimony
+      value: 
+      objectReference: {fileID: 11400000, guid: 139ece44fc6c1cb4297da414303a5cc2, type: 2}
+    - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
+      propertyPath: _WitnessActionList.Array.data[1]._Testimony
+      value: 
+      objectReference: {fileID: 11400000, guid: 895f0d43fab554d419b022300dad8854, type: 2}
+    - target: {fileID: 6090154892846178233, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
+      propertyPath: _WitnessActionList.Array.data[2]._Testimony
+      value: 
+      objectReference: {fileID: 11400000, guid: 89c0cc9c5d7898a4280969d8bb258cdd, type: 2}
     - target: {fileID: 9127491285364213315, guid: b931b20e273149d4e8b9222a09d4f6c7, type: 3}
       propertyPath: m_Name
       value: C

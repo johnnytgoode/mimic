@@ -105,7 +105,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
                 return item.ActionFlag;
             }
         }
-        return LoopManager.ActionFlag.C_Sabori;
+        return LoopManager.ActionFlag.C_SoundCheck;
 
     }
 

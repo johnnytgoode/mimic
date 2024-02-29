@@ -64,10 +64,13 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
 
     public enum ActionFlag
     {
-        C_Sabori,
+        C_SoundCheck,
         A_Kill,
         D_RoomChange,
+        B_Crash
     }
+
+    [SerializeField] private GameObject _FinishText;
 
 
     // Start is called before the first frame update
@@ -148,6 +151,8 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     _LoopPartRestTime = loopPartTime - _LoopWaitTime;
                     if (_LoopPartRestTime <= 0.0f)
                     {
+                        _LoopPartRestTime = 0.0f;
+
                         bool success = WitnessManager.Instance.isAllWitnessPartActionSuccess();
 
                         if(success)
@@ -157,6 +162,7 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                             if (partMax < currentLoop)
                             {
                                 _State = State.Finish;
+                                _FinishText.SetActive(true);
                                 return;
                             }
 
