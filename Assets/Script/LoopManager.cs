@@ -73,6 +73,8 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     [SerializeField] private GameObject _FinishText;
 
 
+    [SerializeField] public TestiomySelector _TestiomySelector;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -222,5 +224,30 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     {
         var actFlag = _PT.GetInt("ActionFlag");
         return (actFlag &= (1 << flag)) != 0 ;
+    }
+
+    public int getCurrentLoopPartNo()
+    {
+        return  _PT.GetInt("CurrentLoop");
+    }
+
+    public void startTestimonySelect()
+    {
+        _TestiomySelector.startSelectTestimony();
+    }
+
+    public void addSelectTestimony()
+    {
+        _TestiomySelector.addSelectTestimony();
+    }
+
+    public void subSelectTestimony()
+    {
+        _TestiomySelector.subSelectTestimony();
+    }
+
+    public void endTestimonySelect()
+    {
+        _TestiomySelector.endSelectTestimony();
     }
 }

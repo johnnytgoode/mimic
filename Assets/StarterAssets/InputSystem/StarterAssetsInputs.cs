@@ -12,10 +12,13 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
-		public bool use;
-		public bool pause;
+        public bool pause;
+        public bool use;
+		public bool testimonySelect;
+        public bool testimonyAdd;
+        public bool testimonySub;
 
-		[Header("Movement Settings")]
+        [Header("Movement Settings")]
 		public bool analogMovement;
 
 		[Header("Mouse Cursor Settings")]
@@ -56,11 +59,27 @@ namespace StarterAssets
 			pause = value.isPressed;
 		}
 
+		public void OnTestimonySelect(InputValue value)
+		{
+            testimonySelect = value.isPressed;
+        }
+
+        public void OnTestimonyAdd(InputValue value)
+        {
+            testimonyAdd = value.isPressed;
+        }
+
+        public void OnTestimonySub(InputValue value)
+        {
+            testimonySub = value.isPressed;
+        }
+
+
 
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -86,6 +105,22 @@ namespace StarterAssets
 
         }
 
+		public void TestimonySelectInput(bool newTestimonySelect)
+		{
+			testimonySelect = newTestimonySelect;
+		}
+
+
+        public void TestimonyAddInput(bool newTestimonyAdd)
+        {
+            testimonyAdd = newTestimonyAdd;
+        }
+
+
+        public void TestimonySubInput(bool newTestimonySub)
+        {
+            testimonyAdd = newTestimonySub;
+        }
 
         public void SprintInput(bool newSprintState)
 		{

@@ -87,6 +87,8 @@ namespace StarterAssets
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
+        private bool _IsSelectingTestimony = false;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -144,6 +146,7 @@ namespace StarterAssets
             GroundedCheck();
             Move();
             Pause();
+            TestimonySelect();
         }
 
         private void LateUpdate()
@@ -331,6 +334,40 @@ namespace StarterAssets
             {
                 GameManager.Instance.IsPause = !GameManager.Instance.IsPause;
                 _input.pause = false;
+            }
+        }
+
+        private void TestimonySelect()
+        {
+            if(_input.testimonySelect)
+            {
+                _IsSelectingTestimony = !_IsSelectingTestimony;
+
+                if(_IsSelectingTestimony)
+                {
+                    LoopManager.Instance.startTestimonySelect();
+                }
+                else
+                {
+                    LoopManager.Instance.endTestimonySelect();
+                }
+
+                _input.testimonySelect = false;
+            }
+
+            if(_IsSelectingTestimony)
+            {
+                if(_input.testimonyAdd)
+                {
+                    LoopManager.Instance.addSelectTestimony();
+                    _input.testimonyAdd = false;
+                }
+
+                if(_input.testimonySub)
+                {
+                    LoopManager.Instance.subSelectTestimony();
+                    _input.testimonySub = false;
+                }
             }
         }
 
