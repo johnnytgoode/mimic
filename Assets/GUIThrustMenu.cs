@@ -8,8 +8,16 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using static WitnessManager;
 
-public class GUIThrustMenu : MonoBehaviour
+public class GUIThrustMenu : GUIBase
 {
+    public override GUIManager.GUIID GUIId
+    {
+        get
+        {
+            return GUIManager.GUIID.ThrustMenu;
+        }
+    }
+
     private TextMeshProUGUI WitnessName;
     private TextMeshProUGUI Testimony;
     private Image Witness01Tmb;

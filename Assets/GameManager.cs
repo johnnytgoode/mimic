@@ -38,11 +38,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             Time.timeScale = 0;
 
             _PauseGUI.SetActive(true);
+            GUIManager.Instance.openGUI(GUIManager.GUIID.ThrustMenu);
         }
         else
         {
             Time.timeScale = 1.0f;
             _PauseGUI.SetActive(false);
+            GUIManager.Instance.closeGUI(GUIManager.GUIID.ThrustMenu);
+
 
         }
     }
