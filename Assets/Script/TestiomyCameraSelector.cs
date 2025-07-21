@@ -7,7 +7,7 @@ using UnityEngine;
 using static WitnessManager;
 
 [Serializable]
-public class TestiomySelector
+public class TestiomyCameraSelector
 {
 
     /// <summary>
@@ -70,33 +70,26 @@ public class TestiomySelector
 
     public void startSelectTestimony()
     {
-        _CurrentSelectTestimony = 0;
         foreach (GameObject camera in _SelectCameraList)
         {
             camera.SetActive(false);
         }
-        _SelectCameraList[_CurrentSelectTestimony].SetActive(true);
+        activateSelectTestimonyCamera(0);
     }
 
-    public void addSelectTestimony()
+    public void selectTestimony(int testimony)
     {
-        _CurrentSelectTestimony++;
-        if (_CurrentSelectTestimony == _SelectCameraList.Count)
+
+        if (testimony == _SelectCameraList.Count)
         {
-            _CurrentSelectTestimony = 0;
+            return;
+        }
+        else if (testimony < 0)
+        {
+            return;
         }
 
-        activateSelectTestimonyCamera();
-    }
-
-    public void subSelectTestimony()
-    {
-        _CurrentSelectTestimony--;
-        if(_CurrentSelectTestimony < 0)
-        {
-            _CurrentSelectTestimony = _SelectCameraList.Count - 1;
-        }
-        activateSelectTestimonyCamera();
+        activateSelectTestimonyCamera(testimony);
     }
 
     public void endSelectTestimony()
@@ -107,13 +100,13 @@ public class TestiomySelector
         }
     }
 
-    private void activateSelectTestimonyCamera()
+    private void activateSelectTestimonyCamera(int select)
     {
         foreach (GameObject camera in _SelectCameraList)
         {
             camera.SetActive(false);
         }
-        _SelectCameraList[_CurrentSelectTestimony].SetActive(true);
+        _SelectCameraList[select].SetActive(true);
     }
 
 }

@@ -146,7 +146,6 @@ namespace StarterAssets
             GroundedCheck();
             Move();
             Pause();
-            TestimonySelect();
         }
 
         private void LateUpdate()
@@ -337,39 +336,39 @@ namespace StarterAssets
             }
         }
 
-        private void TestimonySelect()
-        {
-            if(_input.testimonySelect)
-            {
-                _IsSelectingTestimony = !_IsSelectingTestimony;
+        //private void TestimonySelect()
+        //{
+        //    if(_input.testimonySelect)
+        //    {
+        //        _IsSelectingTestimony = !_IsSelectingTestimony;
 
-                if(_IsSelectingTestimony)
-                {
-                    LoopManager.Instance.startTestimonySelect();
-                }
-                else
-                {
-                    LoopManager.Instance.endTestimonySelect();
-                }
+        //        if(_IsSelectingTestimony)
+        //        {
+        //            LoopManager.Instance.startTestimonySelect();
+        //        }
+        //        else
+        //        {
+        //            LoopManager.Instance.endTestimonySelect();
+        //        }
 
-                _input.testimonySelect = false;
-            }
+        //        _input.testimonySelect = false;
+        //    }
 
-            if(_IsSelectingTestimony)
-            {
-                if(_input.testimonyAdd)
-                {
-                    LoopManager.Instance.addSelectTestimony();
-                    _input.testimonyAdd = false;
-                }
+        //    if(_IsSelectingTestimony)
+        //    {
+        //        if(_input.testimonyAdd)
+        //        {
+        //            LoopManager.Instance.addSelectTestimony();
+        //            _input.testimonyAdd = false;
+        //        }
 
-                if(_input.testimonySub)
-                {
-                    LoopManager.Instance.subSelectTestimony();
-                    _input.testimonySub = false;
-                }
-            }
-        }
+        //        if(_input.testimonySub)
+        //        {
+        //            LoopManager.Instance.subSelectTestimony();
+        //            _input.testimonySub = false;
+        //        }
+        //    }
+        //}
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {

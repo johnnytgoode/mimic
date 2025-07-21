@@ -59,4 +59,20 @@ public class GUIManager : SingletonMonoBehaviour<GUIManager>
         }
 
     }
+
+    public bool isOpen(GUIID id)
+    {
+        var gui = _GUICmpList.Find(x => x.GUIId == id);
+        if (gui != null)
+        {
+            return gui.gameObject.activeSelf;
+        }
+        return false;
+    }
+
+    public GUIBase getGUI(GUIID id)
+    {
+        return _GUICmpList.Find(x => x.GUIId == id);
+    }
+
 }

@@ -73,7 +73,7 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     [SerializeField] private GameObject _FinishText;
 
 
-    [SerializeField] public TestiomySelector _TestiomySelector;
+    [SerializeField] public TestiomyCameraSelector _TestiomySelector;
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +86,15 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     // Update is called once per frame
     void Update()
     {
-        switch (_State) 
+        //updateLoop();
+    }
+
+    /// <summary>
+    /// ループに関する更新(GameManager内で回す）
+    /// </summary>
+    public void updateLoop()
+    {
+        switch (_State)
         {
             case State.Init:
                 {
@@ -157,7 +165,7 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
 
                         bool success = WitnessManager.Instance.isAllWitnessPartActionSuccess();
 
-                        if(success)
+                        if (success)
                         {
                             currentLoop++;
                             int partMax = 5;
@@ -236,14 +244,20 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
         _TestiomySelector.startSelectTestimony();
     }
 
-    public void addSelectTestimony()
-    {
-        _TestiomySelector.addSelectTestimony();
-    }
+    //public void addSelectTestimony()
+    //{
+    //    _TestiomySelector.addSelectTestimony();
+    //}
 
-    public void subSelectTestimony()
+    //public void subSelectTestimony()
+    //{
+    //    _TestiomySelector.subSelectTestimony();
+    //}
+    
+    public void selectTestimony(int select)
     {
-        _TestiomySelector.subSelectTestimony();
+        _TestiomySelector.selectTestimony(select);
+
     }
 
     public void endTestimonySelect()

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using static WitnessManager;
+using static GameManager;
 
 public class GUIThrustMenu : GUIBase
 {
@@ -38,6 +39,20 @@ public class GUIThrustMenu : GUIBase
         ThrustCheck,
         Finish,
     }
+
+    /// <summary>
+    /// クローズ時の状態通知
+    /// </summary>
+    public enum FinishType
+    {
+        None,
+        Cancel,
+        ThrustSuccess,
+        ThrustFail,
+    }
+
+    private FinishType _CurrentFinishType = FinishType.None;
+    public FinishType CurrentFinishType { get { return _CurrentFinishType; } }
 
     /// <summary>
     /// 状態
@@ -79,7 +94,16 @@ public class GUIThrustMenu : GUIBase
     void Update()
     {
 
-        switch(_State)
+        if (Gamepad.current[GamepadButton.LeftShoulder].wasPressedThisFrame)
+        {
+            _State = State.TestimonySelect;
+            _CurrentFinishType = FinishType.Cancel;
+
+
+            LoopManager.Instance.endTestimonySelect();
+        }
+
+        switch (_State)
         {
             case State.Init:
                 {
@@ -91,6 +115,8 @@ public class GUIThrustMenu : GUIBase
 
                     updateTestimonyDisp();
                     updateEvidenceDisp();
+
+                    _CurrentFinishType = FinishType.None;
 
                     _State = State.TestimonySelect;
 
@@ -113,12 +139,14 @@ public class GUIThrustMenu : GUIBase
                     {
                         setThrustFlg();
                         Debug.Log("突きつけ成功！");
-                        _State = State.Finish;
+                        _CurrentFinishType = FinishType.ThrustSuccess;
                     }
                     else
                     {
                         Debug.Log("突きつけ失敗…");
+                        _CurrentFinishType = FinishType.ThrustFail;
                     }
+                    _State = State.Finish;
 
                     break;
                 }
@@ -145,6 +173,9 @@ public class GUIThrustMenu : GUIBase
     /// </summary>
     public void close()
     {
+
+        GUIManager.Instance.closeGUI(GUIManager.GUIID.ThrustMenu);
+
         // 仮
         _State = State.Init;
         GameManager.Instance.IsPause = false;
@@ -174,6 +205,8 @@ public class GUIThrustMenu : GUIBase
                 _CurrentSelectWitness = 0;
             }
             updateTestimonyDisp();
+            // カメラ
+            LoopManager.Instance.selectTestimony(_CurrentSelectWitness);
         }
         if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
         {
@@ -185,6 +218,8 @@ public class GUIThrustMenu : GUIBase
                 _CurrentSelectWitness = _WitnessIds.Count - 1;
             }
             updateTestimonyDisp();
+            // カメラ
+            LoopManager.Instance.selectTestimony(_CurrentSelectWitness);
         }
 
         // 証言確定
