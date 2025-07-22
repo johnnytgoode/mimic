@@ -54,6 +54,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 }
             case GameState.Scenario:
                 {
+					scenario();
                     break;
                 }
 
@@ -78,7 +79,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void testimonySelect()
     {
-        if(GUIManager.Instance.isOpen(GUIManager.GUIID.ThrustMenu))
+        if(GUIManager.Instance.isOpen(GUIManager.GUIID.ThrustMenu) == false)
         {
             var gui = GUIManager.Instance.getGUI(GUIManager.GUIID.ThrustMenu) as GUIThrustMenu;
             if (gui != null)
@@ -106,6 +107,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             }
         }
     }
+
+	private void scenario()
+	{
+		if(GUIManager.Instance.isOpen(GUIManager.GUIID.DialogueWindow) == false)
+		{
+			_State = GameState.Main;
+
+			LoopManager.Instance.endTestimonySelect();
+		}
+	}
 
     private void Pause(bool pause)
     {

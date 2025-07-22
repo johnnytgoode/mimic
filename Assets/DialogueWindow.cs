@@ -54,14 +54,15 @@ public class DialogueWindow : GUIBase
                 }
                 case State.InputWait:
                 {
-                    if (Gamepad.current[GamepadButton.DpadRight].wasPressedThisFrame)
+                    if (Gamepad.current[GamepadButton.A].wasPressedThisFrame)
                     {
                         _State = State.Finish;
                     }
                     break;
                 }
                 case State.Finish:
-                { 
+                {
+					close();
                     break;
                 }
         }
@@ -78,5 +79,13 @@ public class DialogueWindow : GUIBase
         return _State == State.InputWait;
     }
 
+	public void close()
+	{
+
+		GUIManager.Instance.closeGUI(GUIManager.GUIID.DialogueWindow);
+
+		// ‰¼
+		_State = State.Init;
+	}
 
 }

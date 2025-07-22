@@ -242,6 +242,7 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     public void startTestimonySelect()
     {
         _TestiomySelector.startSelectTestimony();
+        
     }
 
     //public void addSelectTestimony()
@@ -257,8 +258,8 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
     public void selectTestimony(int select)
     {
         _TestiomySelector.selectTestimony(select);
-
     }
+
 
     public void endTestimonySelect()
     {
