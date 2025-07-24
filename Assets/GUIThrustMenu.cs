@@ -96,7 +96,7 @@ public class GUIThrustMenu : GUIBase
 
         if (Gamepad.current[GamepadButton.LeftShoulder].wasPressedThisFrame)
         {
-            _State = State.TestimonySelect;
+            _State = State.Finish;
             _CurrentFinishType = FinishType.Cancel;
 
 
