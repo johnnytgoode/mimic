@@ -5,8 +5,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static ITestimonyActor;
 
-public class Witness : Humanoid
+public class Witness : Humanoid , ITestimonyActor
 {
     [SerializeField] private WitnessManager.WitnessId _WitnessId;
     public WitnessManager.WitnessId WitnessId
@@ -116,7 +117,7 @@ public class Witness : Humanoid
         var text = "";
         if (testimonyData != null)
         {
-            text = testimonyData.getTextimony();
+            text = testimonyData.getBaseTextimonyText();
         }
         setBaroonText(text);
     }
@@ -130,5 +131,23 @@ public class Witness : Humanoid
     {
         _BaroonText.text = text;
     }
+
+	#region // ITestimony
+	public TestimonyManager.TestimonyType Type { 
+		get
+		{
+			return TestimonyManager.TestimonyType.WitnessAction;
+		}
+	}
+
+
+	public TestimonyManager.TestimonyID TestimonyId
+	{ 
+		get
+		{
+			return TestimonyManager.TestimonyID._000;
+		}
+			}
+	#endregion
 
 }

@@ -6086,8 +6086,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: -130.99998}
-      _EndControl: {x: -898.99994, y: -130.99998}
+      _EndPosition: {x: -849, y: -131}
+      _EndControl: {x: -899, y: -131}
     showDataValue: 0
   - branchID: 534011718
     enabled: 1
@@ -6098,8 +6098,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: 71}
-      _EndControl: {x: -898.99994, y: 71}
+      _EndPosition: {x: -849, y: 71}
+      _EndControl: {x: -899, y: 71}
     showDataValue: 0
   - branchID: 1655911537
     enabled: 1
@@ -6110,8 +6110,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: 273}
-      _EndControl: {x: -898.99994, y: 273}
+      _EndPosition: {x: -849, y: 273}
+      _EndControl: {x: -899, y: 273}
     showDataValue: 0
   - branchID: 630327709
     enabled: 1
@@ -6122,8 +6122,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: 475}
-      _EndControl: {x: -898.99994, y: 475}
+      _EndPosition: {x: -849, y: 475}
+      _EndControl: {x: -899, y: 475}
     showDataValue: 0
   - branchID: 1752227528
     enabled: 1
@@ -6134,8 +6134,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: 677}
-      _EndControl: {x: -898.99994, y: 677}
+      _EndPosition: {x: -849, y: 677}
+      _EndControl: {x: -899, y: 677}
     showDataValue: 0
   - branchID: 726643700
     enabled: 1
@@ -6146,8 +6146,8 @@ MonoBehaviour:
     lineBezier:
       _StartPosition: {x: -1044, y: -0.9999957}
       _StartControl: {x: -994, y: -0.9999957}
-      _EndPosition: {x: -848.99994, y: 878.99994}
-      _EndControl: {x: -898.99994, y: 878.99994}
+      _EndPosition: {x: -849, y: 879}
+      _EndControl: {x: -899, y: 879}
     showDataValue: 0
   _StartStateID: 534011718
   _States:
@@ -9167,6 +9167,7 @@ Transform:
   - {fileID: 331773315}
   - {fileID: 1550779055}
   - {fileID: 1816853417}
+  - {fileID: 1417643931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1103660211
@@ -12361,6 +12362,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409671638}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1417643930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1417643931}
+  - component: {fileID: 1417643932}
+  m_Layer: 0
+  m_Name: TestimonyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1417643931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417643930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1099084419}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1417643932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417643930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1eebe11a0e76fc4e9a21dad710d6a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1468405235
 GameObject:
   m_ObjectHideFlags: 0
@@ -15967,10 +16012,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: -131.00002}
-      _EndControl: {x: -899.00006, y: -131.00002}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: -131}
+      _EndControl: {x: -899, y: -131}
     showDataValue: 0
   - branchID: 534011718
     enabled: 1
@@ -15979,10 +16024,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: 70.999985}
-      _EndControl: {x: -899.00006, y: 70.999985}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 71}
+      _EndControl: {x: -899, y: 71}
     showDataValue: 0
   - branchID: 1655911537
     enabled: 1
@@ -15991,10 +16036,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: 273}
-      _EndControl: {x: -899.00006, y: 273}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 273}
+      _EndControl: {x: -899, y: 273}
     showDataValue: 0
   - branchID: 630327709
     enabled: 1
@@ -16003,10 +16048,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: 475.00003}
-      _EndControl: {x: -899.00006, y: 475.00003}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 475}
+      _EndControl: {x: -899, y: 475}
     showDataValue: 0
   - branchID: 1752227528
     enabled: 1
@@ -16015,10 +16060,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: 677.00006}
-      _EndControl: {x: -899.00006, y: 677.00006}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 677}
+      _EndControl: {x: -899, y: 677}
     showDataValue: 0
   - branchID: 726643700
     enabled: 1
@@ -16027,10 +16072,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 1759543051}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -1.0000318}
-      _StartControl: {x: -994, y: -1.0000318}
-      _EndPosition: {x: -849.00006, y: 879.00006}
-      _EndControl: {x: -899.00006, y: 879.00006}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 879}
+      _EndControl: {x: -899, y: 879}
     showDataValue: 0
   _StartStateID: 534011718
   _States:
@@ -18448,10 +18493,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
-      _EndPosition: {x: -849, y: -131.00003}
-      _EndControl: {x: -899, y: -131.00003}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: -131}
+      _EndControl: {x: -899, y: -131}
     showDataValue: 0
   - branchID: 534011718
     enabled: 1
@@ -18460,10 +18505,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
-      _EndPosition: {x: -849, y: 70.99996}
-      _EndControl: {x: -899, y: 70.99996}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 71}
+      _EndControl: {x: -899, y: 71}
     showDataValue: 0
   - branchID: 1655911537
     enabled: 1
@@ -18472,8 +18517,8 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
       _EndPosition: {x: -849, y: 273}
       _EndControl: {x: -899, y: 273}
     showDataValue: 0
@@ -18484,10 +18529,10 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
-      _EndPosition: {x: -849, y: 474.99994}
-      _EndControl: {x: -899, y: 474.99994}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
+      _EndPosition: {x: -849, y: 475}
+      _EndControl: {x: -899, y: 475}
     showDataValue: 0
   - branchID: 1752227528
     enabled: 1
@@ -18496,8 +18541,8 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
       _EndPosition: {x: -849, y: 677}
       _EndControl: {x: -899, y: 677}
     showDataValue: 0
@@ -18508,8 +18553,8 @@ MonoBehaviour:
     outBehaviour: {fileID: 2135236702}
     outNodeID: 630327709
     lineBezier:
-      _StartPosition: {x: -1044, y: -0.9999688}
-      _StartControl: {x: -994, y: -0.9999688}
+      _StartPosition: {x: -1044, y: -1}
+      _StartControl: {x: -994, y: -1}
       _EndPosition: {x: -849, y: 879}
       _EndControl: {x: -899, y: 879}
     showDataValue: 0
@@ -19878,6 +19923,10 @@ PrefabInstance:
     - target: {fileID: 2396075959129155257, guid: 803b1d7b667ab814fa5262c0109aaae0, type: 3}
       propertyPath: m_Name
       value: BT_A_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5196994821908857889, guid: 803b1d7b667ab814fa5262c0109aaae0, type: 3}
+      propertyPath: expanded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5196994821908857889, guid: 803b1d7b667ab814fa5262c0109aaae0, type: 3}
       propertyPath: _RefGameObject

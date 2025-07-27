@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+/// <summary>
+/// 証人のアクション終了管理
+/// </summary>
 public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
 {
     public enum WitnessId
@@ -28,19 +31,21 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
     }
 
     /// <summary>
-    /// 証人プレハブリスト
+    /// 証人プレハブリスト(いらない）
     /// </summary>
     [SerializeField]private List<GameObject> _WitnessPrefabList = new List<GameObject>();
 
     /// <summary>
     /// パートデータリスト
+	/// （今はインスペクタに直で指定）
     /// </summary>
     [SerializeField]private List<GameObject> _WitnessActionDataObj = new List<GameObject>();
+	public List<GameObject> WitnessActionDataObj => _WitnessActionDataObj;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+		TestimonyManager.Instance.setupTestimonyDataList();
     }
 
     // Update is called once per frame
@@ -209,7 +214,7 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
                 {
                     return "";
                 }
-                return testimony.getTextimony();
+                return testimony.getBaseTextimonyText();
             }
         }
 

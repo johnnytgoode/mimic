@@ -63,13 +63,18 @@ public class GUIThrustMenu : GUIBase
     /// 選択候補証人リスト
     /// </summary>
     private List<WitnessManager.WitnessId> _WitnessIds = new List<WitnessManager.WitnessId>();
-    private int _CurrentSelectWitness = 0;
 
     /// <summary>
     /// 選択候補証拠品リスト
     /// </summary>
     private List<EvidenceManager.EvidenceId> _EvidenceIds = new List<EvidenceManager.EvidenceId>();
     private int _CurrentSelectEvidence = 0;
+
+	/// <summary>
+	/// 現在選択中の証言
+	/// </summary>
+	private List<TestimonyData> _CurrentPartTestimonyDataList;
+	private int _CurrentSelectTestimony = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -108,10 +113,10 @@ public class GUIThrustMenu : GUIBase
             case State.Init:
                 {
                     _CurrentSelectEvidence = 0;
-                    _CurrentSelectWitness = 0;
+                    _CurrentSelectTestimony = 0;
 
-                    setupWitnessIdList();
-                    setupEvidenceIdList();
+					setupCurrentPartTestimonyIdList();
+					setupEvidenceIdList();
 
                     updateTestimonyDisp();
                     updateEvidenceDisp();
@@ -181,49 +186,50 @@ public class GUIThrustMenu : GUIBase
         GameManager.Instance.IsPause = false;
     }
 
-    private void setupWitnessIdList()
-    {
-        int part = LoopManager.Instance._CurrentPart;
-
-        _WitnessIds = WitnessManager.Instance.getPartActiveWitnessId(part);
-
-        _WitnessIds.Sort();
-    }
+	/// <summary>
+	/// 現在のパートに関連する証言リスト作成（証拠突きつけ対象）
+	/// </summary>
+	private void setupCurrentPartTestimonyIdList()
+	{
+		var part = LoopManager.Instance._CurrentPart;
+		_CurrentPartTestimonyDataList = TestimonyManager.Instance.getCurrentPartTestimonyDataList(part);
+	}
 
     /// <summary>
     /// 証言選択
     /// </summary>
     private void testimonySelect()
     {
-        if(Gamepad.current[GamepadButton.DpadRight].wasPressedThisFrame)
-        {
-            _CurrentSelectWitness++;
-            Debug.Log("CurrentSelectWitness:" + _CurrentSelectWitness);
 
-            if(_CurrentSelectWitness >= _WitnessIds.Count)
-            {
-                _CurrentSelectWitness = 0;
-            }
-            updateTestimonyDisp();
-            // カメラ
-            LoopManager.Instance.selectTestimony(_CurrentSelectWitness);
-        }
-        if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
-        {
-            _CurrentSelectWitness--;
-            Debug.Log("CurrentSelectWitness:" + _CurrentSelectWitness);
+		if (Gamepad.current[GamepadButton.DpadRight].wasPressedThisFrame)
+		{
+			_CurrentSelectTestimony++;
+			Debug.Log("CurrentSelectTestimony:" + _CurrentSelectTestimony);
 
-            if (_CurrentSelectWitness < 0)
-            {
-                _CurrentSelectWitness = _WitnessIds.Count - 1;
-            }
-            updateTestimonyDisp();
-            // カメラ
-            LoopManager.Instance.selectTestimony(_CurrentSelectWitness);
-        }
+			if (_CurrentSelectTestimony >= _CurrentPartTestimonyDataList.Count)
+			{
+				_CurrentSelectTestimony = 0;
+			}
+			updateTestimonyDisp();
+			// カメラ
+			LoopManager.Instance.selectTestimony(_CurrentSelectTestimony);
+		}
+		if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
+		{
+			_CurrentSelectTestimony--;
+			Debug.Log("CurrentSelectTestimony:" + _CurrentSelectTestimony);
 
-        // 証言確定
-        if (Gamepad.current[GamepadButton.A].wasPressedThisFrame)
+			if (_CurrentSelectTestimony < 0)
+			{
+				_CurrentSelectTestimony = _CurrentPartTestimonyDataList.Count - 1;
+			}
+			updateTestimonyDisp();
+			// カメラ
+			LoopManager.Instance.selectTestimony(_CurrentSelectTestimony);
+		}
+
+		// 証言確定
+		if (Gamepad.current[GamepadButton.A].wasPressedThisFrame)
         {
             _State = State.EvidenceSelect;
             Debug.Log("State ->" + _State);
@@ -244,23 +250,19 @@ public class GUIThrustMenu : GUIBase
     /// </summary>
     private void updateTestimonyDisp()
     {
-        int part = LoopManager.Instance._CurrentPart;
+		var testimonyData = _CurrentPartTestimonyDataList[_CurrentSelectTestimony];
 
-        var witnessId = _WitnessIds[_CurrentSelectWitness];
+		string witnessNameText = testimonyData.ActorName;
+		string testimonyText = "";
+		if (testimonyData != null)
+		{
+			testimonyText = testimonyData.getBaseTextimonyText();
+		}
 
-        var witnessData = WitnessManager.Instance.getWitnessData(witnessId);
-        string witnessNameText = witnessData.Name;
-        var testimonyData = WitnessManager.Instance.getTestimonyData(part, witnessId);
-        string testimonyText = "";
-        if(testimonyData != null)
-        {
-            testimonyText = testimonyData.getTextimony();
-        }
-
-        WitnessName.text = witnessNameText;
+		WitnessName.text = witnessNameText;
         Testimony.text = testimonyText;
 
-        var witnessTmb = witnessData.Tmb;
+        var witnessTmb = testimonyData.Tmb;
         Witness01Tmb.sprite = witnessTmb;
     }
 
@@ -328,9 +330,12 @@ public class GUIThrustMenu : GUIBase
     {
         int part = LoopManager.Instance._CurrentPart;
 
-        var witnessId = _WitnessIds[_CurrentSelectWitness];
-        var testimonyData = WitnessManager.Instance.getTestimonyData(part, witnessId);
-        if(testimonyData != null)
+		//var witnessId = _WitnessIds[_CurrentSelectTestimony];
+		//var testimonyData = WitnessManager.Instance.getTestimonyData(part, witnessId);
+
+		var testimonyData = _CurrentPartTestimonyDataList[_CurrentSelectTestimony];
+
+		if (testimonyData != null)
         {
             var evidenceId = _EvidenceIds[_CurrentSelectEvidence];
             if(testimonyData.EvidenceId == evidenceId)
