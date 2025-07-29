@@ -30,10 +30,10 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
         get { return _WitnessList; }
     }
 
-    /// <summary>
-    /// 証人プレハブリスト(いらない）
-    /// </summary>
-    [SerializeField]private List<GameObject> _WitnessPrefabList = new List<GameObject>();
+    ///// <summary>
+    ///// 証人プレハブリスト(使ってない）
+    ///// </summary>
+    //[SerializeField]private List<GameObject> _WitnessPrefabList = new List<GameObject>();
 
     /// <summary>
     /// パートデータリスト
@@ -140,23 +140,23 @@ public class WitnessManager : SingletonMonoBehaviour<WitnessManager>
     /// </summary>
     /// <param name="witnessId"></param>
     /// <returns></returns>
-    public WitnessData getWitnessData(WitnessManager.WitnessId witnessId)
-    {
-        foreach(var witness in _WitnessPrefabList)
-        {
-            var data = witness.GetComponent<WitnessData>();
-            if(data == null)
-            {
-                continue;
-            }
-            if(data.Id == witnessId)
-            {
-                return data;
-            }
-        }
+    //public WitnessData getWitnessData(WitnessManager.WitnessId witnessId)
+    //{
+    //    foreach(var witness in _WitnessPrefabList)
+    //    {
+    //        var data = witness.GetComponent<WitnessData>();
+    //        if(data == null)
+    //        {
+    //            continue;
+    //        }
+    //        if(data.Id == witnessId)
+    //        {
+    //            return data;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     /// <summary>
     /// 証言データ取得

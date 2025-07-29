@@ -11,12 +11,29 @@ public class TestimonyManager : SingletonMonoBehaviour<TestimonyManager>
 		Object
 	}
 
+	public enum TestimonyActorID
+	{
+		None,
+
+		_A,
+		_B,
+		_C,
+		_D
+	}
+
 	public enum TestimonyID
 	{
 		_000,
 		_001,
 		_002, 
-		_003
+		_003,
+		_004,
+		_005,
+		_006,
+		_007,
+		_008,
+		_009,
+
 	}
 
 	/// <summary>
@@ -24,6 +41,15 @@ public class TestimonyManager : SingletonMonoBehaviour<TestimonyManager>
 	/// </summary>
 	private List<TestimonyData> _TestimonyDataList = new List<TestimonyData>();
 
+	/// <summary>
+	/// アクターゲームオブジェクト
+	/// </summary>
+	[SerializeField]
+	private List<GameObject> _TestimonyActorGameObjectList = new List<GameObject>();
+	public List<GameObject> TestimonyActorGameObjectList => _TestimonyActorGameObjectList;
+
+	private List<ITestimonyActor> _TestimonyActorList = new List<ITestimonyActor>();
+	public List<ITestimonyActor> TestimonyActorList => _TestimonyActorList;
 
 	// Start is called before the first frame update
 	void Start()
@@ -103,5 +129,11 @@ public class TestimonyManager : SingletonMonoBehaviour<TestimonyManager>
 
 		var data = _TestimonyDataList.Find(x => x.TestimonyId == id);
 		return data.BaseTestimony;
+	}
+
+	public TestimonyActorID getTestimonyActiorID(TestimonyID id)
+	{
+		var data = _TestimonyDataList.Find(x => x.TestimonyId == id);
+		return data.TestimonyActorID;
 	}
 }

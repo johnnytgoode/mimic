@@ -11,18 +11,18 @@ public class TestimonyData : ScriptableObject
     /// </summary>
     public WitnessManager.WitnessId WitnessId;
 
-	/// <summary>
-	/// 証言内容実行者（証人自身か他の人、あるいは遮蔽物などモノが入ることもある？）
-	/// </summary>
-	private ITestimonyActor _Actor;
-
-	public ITestimonyActor Actor => _Actor;
+	///// <summary>
+	///// 証言内容実行者（証人自身か他の人、あるいは遮蔽物などモノが入ることもある？）
+	///// </summary>
+	//public ITestimonyActor Actor;
 
 
 	/// <summary>
 	/// 証言ID
 	/// </summary>.
 	public TestimonyManager.TestimonyID TestimonyId;
+
+	public TestimonyManager.TestimonyActorID TestimonyActorID;
 
     public int Stage = -1;
     public int PartNo = -1;

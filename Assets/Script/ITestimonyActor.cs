@@ -10,4 +10,7 @@ public interface ITestimonyActor
 
 	public TestimonyManager.TestimonyType Type { get; }
 
+	[SerializeField]
+	public TestimonyManager.TestimonyActorID ActorId { get; }
+
 }

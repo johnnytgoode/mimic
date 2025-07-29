@@ -123,7 +123,11 @@ public class GUIThrustMenu : GUIBase
 
                     _CurrentFinishType = FinishType.None;
 
-                    _State = State.TestimonySelect;
+					// カメラ
+					var testimonyData = _CurrentPartTestimonyDataList[_CurrentSelectTestimony];
+					LoopManager.Instance.selectTestimony(testimonyData.TestimonyId);
+
+					_State = State.TestimonySelect;
 
                     break;
                 }
@@ -211,8 +215,9 @@ public class GUIThrustMenu : GUIBase
 				_CurrentSelectTestimony = 0;
 			}
 			updateTestimonyDisp();
+			var testimonyData = _CurrentPartTestimonyDataList[_CurrentSelectTestimony];
 			// カメラ
-			LoopManager.Instance.selectTestimony(_CurrentSelectTestimony);
+			LoopManager.Instance.selectTestimony(testimonyData.TestimonyId);
 		}
 		if (Gamepad.current[GamepadButton.DpadLeft].wasPressedThisFrame)
 		{
@@ -224,8 +229,9 @@ public class GUIThrustMenu : GUIBase
 				_CurrentSelectTestimony = _CurrentPartTestimonyDataList.Count - 1;
 			}
 			updateTestimonyDisp();
+			var testimonyData = _CurrentPartTestimonyDataList[_CurrentSelectTestimony];
 			// カメラ
-			LoopManager.Instance.selectTestimony(_CurrentSelectTestimony);
+			LoopManager.Instance.selectTestimony(testimonyData.TestimonyId);
 		}
 
 		// 証言確定

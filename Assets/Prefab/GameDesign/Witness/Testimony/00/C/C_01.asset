@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: C_01
   m_EditorClassIdentifier: 
   WitnessId: 0
+  TestimonyId: 5
+  TestimonyActorID: 3
   Stage: -1
   PartNo: -1
+  ActorName: 
   BaseTestimony: "\u7269\u97F3\u304C\u3057\u305F\u306E\u3067\u69D8\u5B50\u3092\u898B\u306B\u884C\u304D\u307E\u3057\u305F"
   EvidenceId: 0
   UpdateTestimony: 
+  _Tmb: {fileID: 0}

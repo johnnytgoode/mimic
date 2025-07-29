@@ -1,3 +1,4 @@
+using Cinemachine;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -25,16 +26,42 @@ public class TestiomyCameraSelector
     /// </summary>
     private TestimonySelectState _State = TestimonySelectState.Idle;
 
-    /// <summary>
-    /// 現在選択している証言（証人？）
-    /// </summary>
-    private int _CurrentSelectTestimony = 0;
 
-    /// <summary>
-    /// 切り替えカメラリスト（Inspector設定）
-    /// </summary>
-    [SerializeField] public List<GameObject> _SelectCameraList = new List<GameObject>();
+	private class ActorCameraInfo
+	{
+		/// <summary>
+		/// カメラ
+		/// </summary>
+		private GameObject _Camera;
 
+		/// <summary>
+		/// 証言ID
+		/// </summary>
+		private TestimonyManager.TestimonyActorID _ActorId;
+
+		public TestimonyManager.TestimonyActorID ActorId => _ActorId;
+
+		/// <summary>
+		/// 証言ID管理用クラス
+		/// </summary>
+		/// <param name="camera"></param>
+		/// <param name="testimonyId"></param>
+		public ActorCameraInfo(GameObject camera, TestimonyManager.TestimonyActorID actorId)
+		{
+			_Camera = camera;
+			_ActorId = actorId;
+		}
+
+		public void setActive(bool v)
+		{
+			_Camera.SetActive(v);
+		}
+	}
+
+	/// <summary>
+	/// アクターのカメラリスト
+	/// </summary>
+	private List<ActorCameraInfo> _ActorCameraList = new List<ActorCameraInfo>();
 
     // Update is called once per frame
     void update()
@@ -68,45 +95,44 @@ public class TestiomyCameraSelector
 
     }
 
-    public void startSelectTestimony()
-    {
-        foreach (GameObject camera in _SelectCameraList)
-        {
-            camera.SetActive(false);
-        }
-        activateSelectTestimonyCamera(0);
-    }
+	public void setupActorCameraList()
+	{
+		foreach(var gameObj in TestimonyManager.Instance.TestimonyActorGameObjectList)
+		{
+			var cameraObj = gameObj.transform.Find("Virtual Camera").gameObject;
 
-    public void selectTestimony(int testimony)
-    {
+			var actorCmp = gameObj.GetComponent<ITestimonyActor>();
 
-        if (testimony == _SelectCameraList.Count)
-        {
-            return;
-        }
-        else if (testimony < 0)
-        {
-            return;
-        }
+			_ActorCameraList.Add(new ActorCameraInfo( cameraObj,actorCmp.ActorId));
+		}
+	}
 
-        activateSelectTestimonyCamera(testimony);
-    }
+	public void selectTestimony(TestimonyManager.TestimonyID testimonyId)
+	{
+		//証言IDをアクターIDに換算
+		var actorID = TestimonyManager.Instance.getTestimonyActiorID(testimonyId);
 
-    public void endSelectTestimony()
-    {
-        foreach (GameObject camera in _SelectCameraList)
-        {
-            camera.SetActive(false);
-        }
-    }
+		var camera = _ActorCameraList.Find(x=>x.ActorId == actorID);
 
-    private void activateSelectTestimonyCamera(int select)
-    {
-        foreach (GameObject camera in _SelectCameraList)
-        {
-            camera.SetActive(false);
-        }
-        _SelectCameraList[select].SetActive(true);
-    }
+		if (camera == null)
+		{
+			return;
+		}
+		foreach (var c in _ActorCameraList)
+		{
+			c.setActive(false);
+		}
+		camera.setActive(true);
+
+	}
+
+	public void endSelectTestimony()
+	{
+		foreach (var camera in _ActorCameraList)
+		{
+			camera.setActive(false);
+		}
+	}
+
 
 }

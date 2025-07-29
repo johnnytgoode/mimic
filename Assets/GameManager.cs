@@ -73,7 +73,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             _State = GameState.TestimonySelect;
 
             GUIManager.Instance.openGUI(GUIManager.GUIID.ThrustMenu);
-            LoopManager.Instance.startTestimonySelect();
+            //LoopManager.Instance.startTestimonySelect();
         }
     }
 

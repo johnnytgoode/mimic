@@ -103,6 +103,8 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
                     // âºÇ≈ç≈ëÂílê›íË
                     _PartNoGUI[0].setPartNo(5);
 
+					_TestiomySelector.setupActorCameraList();
+
                     break;
                 }
             case State.Instantiate:
@@ -239,30 +241,13 @@ public class LoopManager : SingletonMonoBehaviour<LoopManager>
         return  _PT.GetInt("CurrentLoop");
     }
 
-    public void startTestimonySelect()
-    {
-        _TestiomySelector.startSelectTestimony();
-        
-    }
-
-    //public void addSelectTestimony()
-    //{
-    //    _TestiomySelector.addSelectTestimony();
-    //}
-
-    //public void subSelectTestimony()
-    //{
-    //    _TestiomySelector.subSelectTestimony();
-    //}
-    
-    public void selectTestimony(int select)
-    {
-        _TestiomySelector.selectTestimony(select);
-    }
-
-
     public void endTestimonySelect()
     {
         _TestiomySelector.endSelectTestimony();
     }
+
+	public void selectTestimony(TestimonyManager.TestimonyID id)
+	{
+		_TestiomySelector.selectTestimony(id);
+	}
 }

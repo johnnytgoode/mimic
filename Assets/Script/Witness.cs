@@ -147,7 +147,19 @@ public class Witness : Humanoid , ITestimonyActor
 		{
 			return TestimonyManager.TestimonyID._000;
 		}
-			}
+	}
+
+	[SerializeField]
+	private TestimonyManager.TestimonyActorID _ActorID;
+
+
+	public TestimonyManager.TestimonyActorID ActorId
+	{
+		get
+		{
+			return _ActorID;
+		}
+	}
 	#endregion
 
 }
